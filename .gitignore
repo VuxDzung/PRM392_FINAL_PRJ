@@ -1,0 +1,77 @@
+# =========================
+# Android Studio / IntelliJ
+# =========================
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# =========================
+# Gradle
+# =========================
+.gradle/
+build/
+**/build/
+!gradle/wrapper/gradle-wrapper.jar
+gradle-app.setting
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# =========================
+# Android specific
+# =========================
+*.apk
+*.ap_
+*.aab
+*.dex
+*.class
+*.log
+
+# =========================
+# Keystore files
+# =========================
+# (Uncomment if you store keystore locally — better keep outside repo)
+# *.jks
+# *.keystore
+
+# =========================
+# OS generated files
+# =========================
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# =========================
+# Cache / Temp
+# =========================
+.cxx/
+.externalNativeBuild/
+captures/
+navigation.json
+*.orig
+*.rej
+*.swp
+*.swo
+*.tmp
+*.temp
+
+# =========================
+# Android Studio captures & reports
+# =========================
+captures/
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+
+# =========================
+# Misc
+# =========================
+/*.gradle
+/.gradletasknamecache
+/gradle/
