@@ -3,6 +3,7 @@ package com.example.prm392_final_prj.entity;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import java.util.Date;
@@ -40,6 +41,7 @@ public class NotificationEntity {
     public NotificationEntity() {
     }
 
+    @Ignore
     public NotificationEntity(String notiType, String title, String message, boolean isRead, Date createdAt, int userId) {
         this.notiType = notiType;
         this.title = title;

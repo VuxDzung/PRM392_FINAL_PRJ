@@ -2,6 +2,7 @@ package com.example.prm392_final_prj.entity;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "tour")
@@ -41,7 +42,7 @@ public class TourEntity {
 
     public TourEntity() {
     }
-
+    @Ignore
     public TourEntity(String location, String duration, double price, String departure, String destination, boolean airway, String transport, byte[] image, int maxCapacity, int availableSeat) {
         this.location = location;
         this.duration = duration;

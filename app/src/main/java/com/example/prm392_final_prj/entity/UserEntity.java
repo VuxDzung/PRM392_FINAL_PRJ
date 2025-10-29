@@ -2,6 +2,7 @@ package com.example.prm392_final_prj.entity;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
@@ -22,6 +23,9 @@ public class UserEntity {
     @ColumnInfo(name = "email")
     public String email;
 
+    @ColumnInfo(name = "password")
+    public String password;
+
     @ColumnInfo(name = "role")
     public String role;
 
@@ -29,11 +33,20 @@ public class UserEntity {
     public UserEntity() {
     }
 
-    public UserEntity(String firstname, String lastname, String phone, String email, String role) {
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    @Ignore
+    public UserEntity(String firstname, String lastname, String phone, String email, String password, String role) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.phone = phone;
         this.email = email;
+        this.password = password;
         this.role = role;
     }
 
