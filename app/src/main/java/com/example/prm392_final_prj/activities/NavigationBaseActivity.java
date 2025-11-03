@@ -23,10 +23,6 @@ public abstract class NavigationBaseActivity extends AppCompatActivity {
             navView.setOnItemSelectedListener(item -> {
                 int itemId = item.getItemId();
 
-                if (itemId == currentNavItemId) {
-                    return true;
-                }
-
                 Intent intent = null;
 
                 if (itemId == R.id.nav_home) {

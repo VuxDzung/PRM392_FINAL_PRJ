@@ -56,12 +56,6 @@ public class HomeActivity extends NavigationBaseActivity {
     private String currentAirwayFilter = "Loại chuyến bay";
     private String currentSeatsFilter = "Số lượng khách";
 
-    private static WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
-        Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-        v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-        return insets;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,8 +63,6 @@ public class HomeActivity extends NavigationBaseActivity {
 
         //set up for bottom nav
         setupBottomNavigation(R.id.nav_home);
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), HomeActivity::onApplyWindowInsets);
 
         RecyclerView recyclerView = findViewById(R.id.tour_recycler_view); // ID từ activity_home.xml
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
