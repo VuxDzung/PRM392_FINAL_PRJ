@@ -14,26 +14,32 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PRM392_Final_PRJ">
         <activity
-            android:name=".activities.ResetPasswordActivity"
+            android:name=".activities.TourDetailActivity"
             android:exported="false" />
+        <activity
+            android:name=".activities.HomeActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.ResetPasswordActivity"
+            android:exported="true" />
         <activity
             android:name=".activities.ChangePasswordActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activities.RegisterActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activities.AdminActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activities.LoginActivity"
-            android:exported="false" />
-
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
