@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.prm392_final_prj.R;
 import com.example.prm392_final_prj.adapter.TourListAdapter;
 import com.example.prm392_final_prj.entity.TourEntity;
+import com.example.prm392_final_prj.mockdatas.TourMockData;
 import com.example.prm392_final_prj.repository.TourRepository;
 
 import java.util.ArrayList;
@@ -29,11 +30,13 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends NavigationBaseActivity {
     private List<TourEntity> tourList = new ArrayList<>();
     private List<TourEntity> allTours = new ArrayList<>();
     private TourListAdapter adapter;
     private TourRepository repository;
+    // Mockdata for testing
+    private TourMockData mockData = new TourMockData();
 
     //spinner
     private Spinner spinnerPriceRange;
@@ -63,6 +66,9 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        //set up for bottom nav
+        setupBottomNavigation(R.id.nav_home);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), HomeActivity::onApplyWindowInsets);
 
@@ -97,7 +103,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 //add fake data for testing
                 if (tours == null || tours.isEmpty()) {
-                    addMockDataForDemo();
+                    allTours = mockData.getAllTours();
                 }
 
                 updateDynamicSpinners(tours);
@@ -284,50 +290,9 @@ public class HomeActivity extends AppCompatActivity {
         return false;
     }
 
-    private void addMockDataForDemo() {
-        allTours.clear();
-
-        allTours.add(new TourEntity("Ha long Bay", "4 Days - 3 Nights", 120.34, "Ha Noi", "Ha Long", false, "Bus", null, 50, 20));
-        allTours.add(new TourEntity("Da Nang", "2 Days - 1 Nights", 185.75, "Ha Noi", "Da Nang", true, "Airplane", null, 40, 15));
-        allTours.add(new TourEntity("Sapa Mist Escape", "3 Days - 2 Nights", 95.00, "Ha Noi", "Sapa", false, "Bus", null, 30, 10)); // Dưới $100
-        allTours.add(new TourEntity("Hanoi Old Quarter", "1 Day", 49.99, "Ha Noi", "Hanoi", false, "Walking", null, 15, 5)); // Dưới $100
-        allTours.add(new TourEntity("Nha Trang Mini", "4 Days - 3 Nights", 250.00, "HCM City", "Nha Trang", true, "Airplane", null, 35, 12));
-
-
-        allTours.add(new TourEntity("Central Heritage", "5 Days - 4 Nights", 320.50, "Da Nang", "Hue", true, "Airplane", null, 25, 8));
-        allTours.add(new TourEntity("Da Lat Flower", "6 Days - 5 Nights", 410.75, "HCM City", "Da Lat", true, "Airplane", null, 20, 7));
-        allTours.add(new TourEntity("Mekong River Tour", "7 Days - 6 Nights", 499.00, "HCM City", "Can Tho", false, "Cruise", null, 18, 5));
-
-
-        allTours.add(new TourEntity("Vietnam Grand Tour", "10 Days - 9 Nights", 980.00, "Ha Noi", "HCM City", true, "Airplane", null, 12, 4)); // Trên $500
-        allTours.add(new TourEntity("Southeast Asia", "14 Days - 13 Nights", 1500.00, "Ha Noi", "Bangkok", true, "Airplane", null, 10, 2)); // Trên $500
-        allTours.add(new TourEntity("Highlands Trek", "8 Days - 7 Nights", 550.00, "HCM City", "Dalat", false, "Bus", null, 15, 6)); // Trên $500
-
-
-        allTours.add(new TourEntity("Ninh Binh Karst", "Weekend Getaway", 150.00, "Ha Noi", "Ninh Binh", false, "Bus", null, 45, 20)); // Weekend Getaway
-        allTours.add(new TourEntity("Vung Tau Relax", "Weekend Getaway", 180.00, "HCM City", "Vung Tau", false, "Car", null, 50, 25)); // Weekend Getaway
-
-        adapter.setTourList(allTours);
-        adapter.notifyDataSetChanged();
-    }
     public void onSeeMoreClick(TourEntity tour) {
         Intent intent = new Intent(this, TourDetailActivity.class);
-
         intent.putExtra(TourDetailActivity.EXTRA_TOUR_ID, tour.id);
-        intent.putExtra(TourDetailActivity.EXTRA_TOUR_LOCATION, tour.location);
-        intent.putExtra(TourDetailActivity.EXTRA_TOUR_DURATION, tour.duration);
-        intent.putExtra(TourDetailActivity.EXTRA_TOUR_TRANSPORT, tour.transport);
-
-        intent.putExtra(TourDetailActivity.EXTRA_TOUR_PRICE, String.format(Locale.US, "$%.2f", tour.price));
-        intent.putExtra(TourDetailActivity.EXTRA_TOUR_MAX_CAPACITY, tour.maxCapacity);
-        intent.putExtra(TourDetailActivity.EXTRA_TOUR_AVAILABLE_SEAT, tour.availableSeat);
-
-        String routeType = tour.airway ? "round-trip" : "one-way";
-        String route = String.format("%s -> %s (%s)",
-                tour.getDeparture(), tour.getDestination(), routeType);
-        intent.putExtra(TourDetailActivity.EXTRA_TOUR_ROUTE, route);
-
-        intent.putExtra(TourDetailActivity.EXTRA_TOUR_IMAGE_BYTES, tour.image);
 
         startActivity(intent);
     }
