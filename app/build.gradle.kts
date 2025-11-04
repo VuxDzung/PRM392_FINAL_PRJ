@@ -1,10 +1,12 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
 }
 
 android {
     buildFeatures {
         buildConfig = true
+        viewBinding = true
     }
     namespace = "com.example.prm392_final_prj"
     compileSdk = 36
@@ -40,6 +42,10 @@ android {
             targetCompatibility = JavaVersion.VERSION_11
         }
     }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
 
     dependencies {
 
@@ -49,6 +55,9 @@ android {
         implementation("com.sun.mail:android-activation:1.6.7")
         implementation("androidx.room:room-runtime:2.4.3")
         annotationProcessor("androidx.room:room-compiler:2.4.3")
+        implementation("com.google.android.gms:play-services-location:17.1.0")
+        implementation("com.google.android.gms:play-services-maps:19.0.9")
+        implementation("com.google.android.gms:play-services-places:17.1.0")
         implementation(libs.activity)
         implementation(libs.constraintlayout)
         testImplementation(libs.junit)
@@ -61,4 +70,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.navigation.fragment)
+    implementation(libs.navigation.ui)
+    implementation(libs.play.services.maps)
 }
