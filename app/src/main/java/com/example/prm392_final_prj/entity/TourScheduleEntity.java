@@ -3,6 +3,7 @@ package com.example.prm392_final_prj.entity;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import java.util.Date;
@@ -39,7 +40,7 @@ public class TourScheduleEntity {
     // --- Constructors ---
     public TourScheduleEntity() {
     }
-
+    @Ignore
     public TourScheduleEntity(String place, Date departTime, String address, byte[] image, String description, int tourId) {
         this.place = place;
         this.departTime = departTime;

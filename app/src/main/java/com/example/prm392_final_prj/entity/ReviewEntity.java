@@ -3,6 +3,7 @@ package com.example.prm392_final_prj.entity;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
@@ -38,7 +39,7 @@ public class ReviewEntity {
     // --- Constructors ---
     public ReviewEntity() {
     }
-
+    @Ignore
     public ReviewEntity(float rate, String content, int tourId, int userId) {
         this.rate = rate;
         this.content = content;
