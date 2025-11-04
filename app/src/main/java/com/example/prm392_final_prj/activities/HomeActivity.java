@@ -98,7 +98,7 @@ public class HomeActivity extends NavigationBaseActivity {
                     allTours = mockData.getAllTours();
                 }
 
-                updateDynamicSpinners(tours);
+                updateDynamicSpinners(allTours);
                 applyFilters();
 
             }
@@ -268,15 +268,15 @@ public class HomeActivity extends NavigationBaseActivity {
         }
 
         if (currentSeatsFilter.equals("Đơn")) {
-            return tour.availableSeat >= 1;
+            return tour.maxCapacity >= 1;
         } else if (currentSeatsFilter.equals("Đôi")) {
-            return tour.availableSeat >= 2;
+            return tour.maxCapacity >= 2;
         } else if (currentSeatsFilter.equals("Gia đình")) {
-            return tour.availableSeat >= 3;
+            return tour.maxCapacity >= 3;
         } else if (currentSeatsFilter.equals("Nhóm lớn")) {
-            return tour.availableSeat >= 8;
+            return tour.maxCapacity >= 8;
         } else if (currentSeatsFilter.equals("Đoàn khách")) {
-            return tour.availableSeat >= 30;
+            return tour.maxCapacity >= 30;
         }
 
         return false;

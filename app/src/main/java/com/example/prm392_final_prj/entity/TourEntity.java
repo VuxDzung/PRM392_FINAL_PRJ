@@ -37,13 +37,10 @@ public class TourEntity {
     @ColumnInfo(name = "maxCapacity")
     public int maxCapacity;
 
-    @ColumnInfo(name = "availableSeat")
-    public int availableSeat;
-
     public TourEntity() {
     }
     @Ignore
-    public TourEntity(String location, String duration, double price, String departure, String destination, boolean airway, String transport, byte[] image, int maxCapacity, int availableSeat) {
+    public TourEntity(String location, String duration, double price, String departure, String destination, boolean airway, String transport, byte[] image, int maxCapacity) {
         this.location = location;
         this.duration = duration;
         this.price = price;
@@ -53,7 +50,6 @@ public class TourEntity {
         this.transport = transport;
         this.image = image;
         this.maxCapacity = maxCapacity;
-        this.availableSeat = availableSeat;
     }
 
     public int getId() {
@@ -134,13 +130,5 @@ public class TourEntity {
 
     public void setMaxCapacity(int maxCapacity) {
         this.maxCapacity = maxCapacity;
-    }
-
-    public int getAvailableSeat() {
-        return availableSeat;
-    }
-
-    public void setAvailableSeat(int availableSeat) {
-        this.availableSeat = availableSeat;
     }
 }

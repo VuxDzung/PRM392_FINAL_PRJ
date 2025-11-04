@@ -94,7 +94,7 @@ public class TourDetailActivity extends NavigationBaseActivity {
         detailRoute.setText(route);
 
 
-        detailSeatsAvailable.setText(String.format(Locale.US, "%d/%d seats available", tour.availableSeat, tour.maxCapacity));
+        detailSeatsAvailable.setText(String.format(Locale.US, "%d seats", tour.maxCapacity));
 
         if (tour.image != null && tour.image.length > 0) {
             detailImage.setImageBitmap(BitmapFactory.decodeByteArray(tour.image, 0, tour.image.length));

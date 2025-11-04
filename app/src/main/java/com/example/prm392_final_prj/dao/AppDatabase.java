@@ -14,7 +14,7 @@ import java.util.concurrent.Executors;
 
 @Database(entities = {TourEntity.class, UserEntity.class, TourScheduleEntity.class,
         BookingOrderEntity.class, ReviewEntity.class, NotificationEntity.class},
-        version = 1,
+        version = 2,
         exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
@@ -41,7 +41,7 @@ public abstract class AppDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                     AppDatabase.class, "online_tour_db") // Đặt tên file DB
-                            // .fallbackToDestructiveMigration() // Thêm nếu bạn muốn DB tự xóa khi nâng cấp version
+                            .fallbackToDestructiveMigration() // Thêm nếu bạn muốn DB tự xóa khi nâng cấp version
                             .build();
                 }
             }
