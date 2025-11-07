@@ -47,7 +47,7 @@ public class TourScheduleAdapter extends RecyclerView.Adapter<TourScheduleAdapte
         holder.scheduleTime.setText(timeDisplay);
 
         if (current.image != null && current.image.length > 0) {
-            holder.locationPhoto.setImageBitmap(ImageUtils.getBitmapFromBytes(current.image));
+//            holder.locationPhoto.setImageBitmap(ImageUtils.getBitmapFromBytes(current.image));
         } else {
             holder.locationPhoto.setImageResource(R.drawable.ic_launcher_background);
         }
