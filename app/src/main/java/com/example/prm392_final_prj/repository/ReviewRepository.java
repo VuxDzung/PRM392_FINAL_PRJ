@@ -22,6 +22,18 @@ public class ReviewRepository {
         });
     }
 
+    public void deleteReview(ReviewEntity review) {
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            mReviewDao.delete(review);
+        });
+    }
+
+    public void updateReview(ReviewEntity review) {
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            mReviewDao.update(review);
+        });
+    }
+
     public LiveData<List<ReviewEntity>> getReviewsForTour(int tourId) {
         return mReviewDao.getReviewsForTour(tourId);
     }

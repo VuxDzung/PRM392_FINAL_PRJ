@@ -45,6 +45,10 @@ public class UserRepository {
         return mUserDao.getUserById(id);
     }
 
+    public LiveData<List<UserEntity>> getAllUsers() {
+        return mUserDao.getAllUsers();
+    }
+
     public LiveData<UserEntity> getUserByEmail(String email) {
         return mUserDao.getUserByEmail(email);
     }

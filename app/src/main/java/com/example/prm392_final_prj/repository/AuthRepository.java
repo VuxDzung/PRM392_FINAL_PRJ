@@ -106,7 +106,7 @@ public class AuthRepository {
                 return;
             }
             user.setPassword(hashPassword(newPassword));
-            userDao.insert(user); // update user
+            userDao.update(user); // update user
             mainHandler.post(callback::onSuccess);
         });
     }

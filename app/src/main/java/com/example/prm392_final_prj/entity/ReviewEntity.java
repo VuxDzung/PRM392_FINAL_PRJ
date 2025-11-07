@@ -7,6 +7,8 @@ import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import java.util.Date;
+
 @Entity(tableName = "review",
         foreignKeys = {
                 @ForeignKey(entity = TourEntity.class,
@@ -30,6 +32,9 @@ public class ReviewEntity {
     @ColumnInfo(name = "content")
     public String content;
 
+    @ColumnInfo(name = "departTime")
+    public Date timeStamp;
+
     @ColumnInfo(name = "tourId")
     public int tourId;
 
@@ -39,10 +44,20 @@ public class ReviewEntity {
     // --- Constructors ---
     public ReviewEntity() {
     }
-    @Ignore
-    public ReviewEntity(float rate, String content, int tourId, int userId) {
+
+    public ReviewEntity(int id, float rate, String content, Date timeStamp, int tourId, int userId) {
+        this.id = id;
         this.rate = rate;
         this.content = content;
+        this.timeStamp = timeStamp;
+        this.tourId = tourId;
+        this.userId = userId;
+    }
+    @Ignore
+    public ReviewEntity(float rate, String content, Date timeStamp, int tourId, int userId) {
+        this.rate = rate;
+        this.content = content;
+        this.timeStamp = timeStamp;
         this.tourId = tourId;
         this.userId = userId;
     }
@@ -82,6 +97,14 @@ public class ReviewEntity {
 
     public int getUserId() {
         return userId;
+    }
+
+    public Date getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(Date timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
     public void setUserId(int userId) {

@@ -1,21 +1,18 @@
 package com.example.prm392_final_prj.activities;
 
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.Observer;
 
 import com.example.prm392_final_prj.R;
 import com.example.prm392_final_prj.entity.TourEntity;
-import com.example.prm392_final_prj.mockdatas.TourMockData;
+import com.example.prm392_final_prj.mockdata.TourMockData;
 import com.example.prm392_final_prj.repository.TourRepository;
 
 import java.util.Locale;
@@ -36,6 +33,10 @@ public class TourDetailActivity extends NavigationBaseActivity {
     private TextView detailRoute;
     private TextView detailTransport;
     private TextView detailSeatsAvailable;
+
+    private Button bookBtn;
+    private Button scheduleBtn;
+    private Button reviewBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,14 @@ public class TourDetailActivity extends NavigationBaseActivity {
                 loadTourDetails(tourId);
             }
         }
+
+        bookBtn = findViewById(R.id.btn_booking_to_cart);
+        scheduleBtn = findViewById(R.id.btn_view_schedule);
+        reviewBtn = findViewById(R.id.btn_give_feedback);
+
+        bookBtn.setOnClickListener(v -> onBookingClick());
+        scheduleBtn.setOnClickListener(v -> onScheduleClick());
+        reviewBtn.setOnClickListener(v -> onReviewClick());
     }
 
     private void loadTourDetails(int id) {
@@ -94,12 +103,26 @@ public class TourDetailActivity extends NavigationBaseActivity {
         detailRoute.setText(route);
 
 
-        detailSeatsAvailable.setText(String.format(Locale.US, "%d/%d seats available", tour.availableSeat, tour.maxCapacity));
+        detailSeatsAvailable.setText(String.format(Locale.US, "%d seats", tour.maxCapacity));
 
         if (tour.image != null && tour.image.length > 0) {
             detailImage.setImageBitmap(BitmapFactory.decodeByteArray(tour.image, 0, tour.image.length));
         } else {
             detailImage.setImageResource(R.drawable.ic_launcher_background);
         }
+    }
+
+    private void onReviewClick(){
+        Intent intent = new Intent(this, FeedbackActivity.class);
+        intent.putExtra(EXTRA_TOUR_ID, tourId);
+        startActivity(intent);
+    }
+
+    private void onScheduleClick(){
+        Toast.makeText(this, "Schedule: " + detailLocation.getText(), Toast.LENGTH_SHORT).show();
+    }
+
+    private void onBookingClick(){
+        Toast.makeText(this, "Booking: " + detailLocation.getText(), Toast.LENGTH_SHORT).show();
     }
 }

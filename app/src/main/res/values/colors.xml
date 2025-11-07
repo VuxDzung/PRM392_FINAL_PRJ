@@ -5,8 +5,10 @@
     <color name="teal_700">#018786</color>
     <color name="cyan_light">#E0F7FA</color>
     <color name="yellow_light">#FFF8EC</color>
+    <color name="yellow">#FFCF11</color>
     <color name="orange">#EF9000</color>
     <color name="blue">#0093EF</color>
+    <color name="red">#EF0000</color>
 
     <color name="cyan_primary">#00BCD4</color>
     <color name="cyan_secondary">#0097A7</color>
