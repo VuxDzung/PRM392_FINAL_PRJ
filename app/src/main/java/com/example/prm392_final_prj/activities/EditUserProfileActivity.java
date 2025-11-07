@@ -209,7 +209,7 @@ public class EditUserProfileActivity extends NavigationBaseActivity {
         if (selectedBitmap != null) {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             selectedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            currentUser.setAvatar(stream.toByteArray());
+            currentUser.setImage(stream.toByteArray());
         }
 
         // Save to database using repository

@@ -42,4 +42,10 @@ public interface UserDao {
     List<UserEntity> getAllUsersSync();
     @Delete
     void delete(UserEntity user);
+
+    @Query("SELECT COUNT(*) FROM user")
+    int getTotalUsersSync();
+
+    @Query("SELECT COUNT(*) FROM user WHERE role = 'customer'")
+    int getCustomerCount();
 }

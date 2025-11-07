@@ -121,4 +121,21 @@ public class ImageUtils {
         File file = new File(imagePath);
         return file.exists();
     }
+
+    /**
+     * Chuyển đổi mảng byte thành Bitmap
+     * @param imageBytes Dữ liệu ảnh dạng byte[]
+     * @return Bitmap hoặc null nếu lỗi
+     */
+    public static Bitmap getBitmapFromBytes(byte[] imageBytes) {
+        if (imageBytes == null || imageBytes.length == 0) {
+            return null;
+        }
+        try {
+            return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

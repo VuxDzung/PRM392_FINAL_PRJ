@@ -54,6 +54,7 @@ android {
         implementation("com.sun.mail:android-mail:1.6.7")
         implementation("com.sun.mail:android-activation:1.6.7")
         implementation("androidx.room:room-runtime:2.4.3")
+        implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
         annotationProcessor("androidx.room:room-compiler:2.4.3")
         implementation("com.google.android.gms:play-services-location:17.1.0")
         implementation("com.google.android.gms:play-services-maps:19.0.9")

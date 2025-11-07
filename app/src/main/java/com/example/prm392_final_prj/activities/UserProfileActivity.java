@@ -99,10 +99,10 @@ public class UserProfileActivity extends NavigationBaseActivity {
         tvLastName.setText(user.getLastname());
         tvPhone.setText(user.getPhone());
         tvEmailDetail.setText(user.getEmail());
+//        ImageUtils.loadImageIntoView(user.getImagePath(), imgProfile, R.drawable.ic_profile);
 
-
-        if (user.getAvatar() != null && user.getAvatar().length > 0) {
-            Bitmap bmp = BitmapFactory.decodeByteArray(user.getAvatar(), 0, user.getAvatar().length);
+        if (user.getImage() != null && user.getImage().length > 0) {
+            Bitmap bmp = ImageUtils.getBitmapFromBytes(user.getImage());// BitmapFactory.decodeByteArray(user.getImage(), 0, user.getImage().length);
             imgProfile.setImageBitmap(bmp);
         } else {
             imgProfile.setImageResource(R.drawable.ic_profile);

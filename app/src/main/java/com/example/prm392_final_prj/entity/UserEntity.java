@@ -29,8 +29,8 @@ public class UserEntity {
     @ColumnInfo(name = "role")
     public String role;
 
-    @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "avatar")
-    public byte[] avatar;
+    @ColumnInfo(name = "image")
+    public byte[] image;
 
 //    @ColumnInfo(name = "isDeleted")
 //    public boolean isDeleted;
@@ -100,11 +100,15 @@ public class UserEntity {
     public String getRole() {
         return role;
     }
-    public byte[] getAvatar() { return avatar; }
-
-    public void setAvatar(byte[] avatar) { this.avatar = avatar; }
     public void setRole(String role) {
         this.role = role;
+    }
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 //    public boolean isDeleted() {
 //        return isDeleted;
