@@ -2,6 +2,7 @@ package com.example.prm392_final_prj.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -36,4 +37,9 @@ public interface UserDao {
 
     @Update
     void update(UserEntity user);
+
+    @Query("SELECT * FROM user")
+    List<UserEntity> getAllUsersSync();
+    @Delete
+    void delete(UserEntity user);
 }

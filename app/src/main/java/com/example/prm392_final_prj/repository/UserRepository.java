@@ -108,6 +108,10 @@ public class UserRepository {
         });
     }
 
+    public List<UserEntity> getAll() {
+        return mUserDao.getAllUsersSync();
+    }
+
     // Get user synchronously (dùng trong background thread)
     public UserEntity getUserByIdSync(int id) {
         return mUserDao.getUserById(id).getValue();

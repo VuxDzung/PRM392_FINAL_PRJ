@@ -1,6 +1,8 @@
 package com.example.prm392_final_prj.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.widget.*;
 
@@ -19,6 +21,7 @@ import androidx.lifecycle.Observer;
 public class UserProfileActivity extends NavigationBaseActivity {
     private TextView tvFullName, tvEmail, tvFirstName, tvLastName, tvPhone, tvEmailDetail;
     private ImageButton btnEdit;
+    private ImageView imgProfile;
     private UserRepository userRepository;
     private SessionManager sessionManager;
     private int currentUserId;
@@ -65,6 +68,7 @@ public class UserProfileActivity extends NavigationBaseActivity {
         tvPhone = findViewById(R.id.tvPhone);
         tvEmailDetail = findViewById(R.id.tvEmailDetail);
         btnEdit = findViewById(R.id.btnEdit);
+        imgProfile = findViewById(R.id.imgProfile);
     }
 
     private void loadUserProfile() {
@@ -95,6 +99,14 @@ public class UserProfileActivity extends NavigationBaseActivity {
         tvLastName.setText(user.getLastname());
         tvPhone.setText(user.getPhone());
         tvEmailDetail.setText(user.getEmail());
+
+
+        if (user.getAvatar() != null && user.getAvatar().length > 0) {
+            Bitmap bmp = BitmapFactory.decodeByteArray(user.getAvatar(), 0, user.getAvatar().length);
+            imgProfile.setImageBitmap(bmp);
+        } else {
+            imgProfile.setImageResource(R.drawable.ic_profile);
+        }
     }
 
     private void setupListeners() {

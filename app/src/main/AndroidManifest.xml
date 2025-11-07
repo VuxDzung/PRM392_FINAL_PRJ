@@ -24,6 +24,9 @@
             android:name=".activities.MapScheduleActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.AccountManagementActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.EditUserProfileActivity"
             android:exported="false" />
         <activity
