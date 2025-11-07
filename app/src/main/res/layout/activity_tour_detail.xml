@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.TourDetailActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/tour_detail_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottom_nav_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:background="#E0E0E0">
+                <ImageView
+                    android:id="@+id/detail_tour_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_launcher_background"
+                    android:contentDescription="Tour Detail Image" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/detail_tour_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="24sp"
+                    android:layout_marginBottom="16dp"
+                    tools:text="Ha long Bay"/>
+
+                <LinearLayout
+                    style="@style/DetailItemRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView style="@style/DetailItemLabel" android:text="Duration:"/>
+                    <TextView
+                        android:id="@+id/detail_duration"
+                        style="@style/DetailItemValue"
+                        tools:text="4 Days - 3 Nights"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/DetailItemRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView style="@style/DetailItemLabel" android:text="Rating:"/>
+                    <LinearLayout
+                        android:id="@+id/detail_rating_stars"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="★" android:textColor="#FFC107"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="★" android:textColor="#FFC107"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="★" android:textColor="#FFC107"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="★" android:textColor="#FFC107"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="☆" android:textColor="#FFC107"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/DetailItemRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView style="@style/DetailItemLabel"
+                        android:text="Price:"/>
+                    <TextView
+                        android:id="@+id/detail_price"
+                        style="@style/DetailItemValue"
+                        tools:text="120.34"
+                        android:textStyle="bold"
+                        android:textColor="@color/design_default_color_primary"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/DetailItemRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView style="@style/DetailItemLabel"
+                        android:text="Available seats:"/>
+                    <TextView
+                        android:id="@+id/detail_seats_available"
+                        style="@style/DetailItemValue"
+                        tools:text="8/10 seats"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/DetailItemRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView style="@style/DetailItemLabel"
+                        android:text="Transport:"/>
+                    <TextView
+                        android:id="@+id/detail_transport"
+                        style="@style/DetailItemValue"
+                        tools:text="Airplane"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/DetailItemRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView style="@style/DetailItemLabel"
+                        android:text="Start to end:"/>
+                    <TextView
+                        android:id="@+id/detail_route"
+                        style="@style/DetailItemValue"
+                        tools:text="Hanoi -> HaLong (one-way)"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="16dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp">
+
+                    <Button
+                        android:id="@+id/btn_booking_to_cart"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:text="Booking to Cart"
+                        android:layout_marginEnd="8dp"/>
+
+                    <Button
+                        android:id="@+id/btn_view_schedule"
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:text="View schedule In map"
+                        android:backgroundTint="@color/blue"/>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_give_feedback"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Give Feedback"
+                    android:backgroundTint="@color/orange"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <FrameLayout
+        android:id="@+id/bottom_nav_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <include layout="@layout/bottom_navigation" />
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

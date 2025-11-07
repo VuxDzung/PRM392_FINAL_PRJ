@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="price_ranges">
+        <item>Mức giá</item>
+        <item>Dưới $100</item>
+        <item>$100 - $200</item>
+        <item>$200 - $300</item>
+        <item>$300 - $500</item>
+        <item>Trên $500</item>
+    </string-array>
+
+    <string-array name="trip_durations">
+        <item>Loại hình</item>
+        <item>Short trip (1-3 Ngày)</item>
+        <item>Mid-range trip (4-6 Ngày)</item>
+        <item>Long trip (Hơn 6 Ngày)</item>
+    </string-array>
+
+    <string-array name="airway_options">
+        <item>Loại chuyến</item>
+        <item>Một chiều</item>
+        <item>Hai chiều</item>
+    </string-array>
+
+    <string-array name="passenger_count_options">
+        <item>Lượng khách</item>
+        <item>Đơn</item>
+        <item>Đôi</item>
+        <item>Gia đình</item>
+        <item>Nhóm lớn</item>
+        <item>Đoàn khách</item>
+    </string-array>
+</resources>
