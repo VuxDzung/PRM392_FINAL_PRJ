@@ -10,10 +10,6 @@ import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,12 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.prm392_final_prj.R;
 import com.example.prm392_final_prj.adapter.TourListAdapter;
 import com.example.prm392_final_prj.entity.TourEntity;
-import com.example.prm392_final_prj.mockdatas.TourMockData;
+import com.example.prm392_final_prj.mockdata.TourMockData;
 import com.example.prm392_final_prj.repository.TourRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -88,20 +83,19 @@ public class HomeActivity extends NavigationBaseActivity {
 
         setupSpinnerListeners();
 
-        repository.getAllTours().observe(this, new Observer<List<TourEntity>>() {
-            @Override
-            public void onChanged(List<TourEntity> tours) {
-                HomeActivity.this.allTours = tours;
+        repository.getAllTours().observe(this, tours -> {
+            HomeActivity.this.allTours = tours;
 
-                //add fake data for testing
-                if (tours == null || tours.isEmpty()) {
-                    allTours = mockData.getAllTours();
+            //add fake data for testing
+            if (tours == null || tours.isEmpty()) {
+                allTours = mockData.getAllTours();
+                for (TourEntity tour : allTours) {
+                    repository.insertTour(tour);
                 }
-
-                updateDynamicSpinners(tours);
-                applyFilters();
-
             }
+
+            updateDynamicSpinners(allTours);
+            applyFilters();
         });
     }
 
@@ -268,15 +262,15 @@ public class HomeActivity extends NavigationBaseActivity {
         }
 
         if (currentSeatsFilter.equals("Đơn")) {
-            return tour.availableSeat >= 1;
+            return tour.maxCapacity >= 1;
         } else if (currentSeatsFilter.equals("Đôi")) {
-            return tour.availableSeat >= 2;
+            return tour.maxCapacity >= 2;
         } else if (currentSeatsFilter.equals("Gia đình")) {
-            return tour.availableSeat >= 3;
+            return tour.maxCapacity >= 3;
         } else if (currentSeatsFilter.equals("Nhóm lớn")) {
-            return tour.availableSeat >= 8;
+            return tour.maxCapacity >= 8;
         } else if (currentSeatsFilter.equals("Đoàn khách")) {
-            return tour.availableSeat >= 30;
+            return tour.maxCapacity >= 30;
         }
 
         return false;

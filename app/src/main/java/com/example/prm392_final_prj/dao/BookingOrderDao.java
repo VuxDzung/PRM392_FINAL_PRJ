@@ -6,6 +6,8 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import com.example.prm392_final_prj.entity.BookingOrderEntity;
+
+import java.util.Date;
 import java.util.List;
 
 @Dao
@@ -15,4 +17,17 @@ public interface BookingOrderDao {
 
     @Query("SELECT * FROM booking_order WHERE userId = :userId ORDER BY startTime DESC")
     LiveData<List<BookingOrderEntity>> getBookingsForUser(int userId);
+
+
+    //region Analytics helpers
+    // Tổng số booking (sync)
+    @Query("SELECT COUNT(*) FROM booking_order")
+    int getTotalBookingsSync();
+
+    @Query("SELECT strftime('%m', startTime) as month, COUNT(*) FROM booking_order WHERE startTime BETWEEN :from AND :to GROUP BY month")
+    List<Integer> getBookingCountByMonth(Date from, Date to);
+
+    @Query("SELECT strftime('%m', startTime) as month, SUM(adultAmount*price) FROM booking_order bo JOIN tour t ON bo.tourId=t.id WHERE startTime BETWEEN :from AND :to GROUP BY month")
+    List<Double> getRevenueByMonth(Date from, Date to);
+    //endregion
 }

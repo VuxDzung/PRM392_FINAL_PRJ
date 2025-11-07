@@ -3,12 +3,12 @@ import com.example.prm392_final_prj.utils.JwtUtils;
 import org.json.JSONObject;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -19,7 +19,7 @@ import com.example.prm392_final_prj.utils.SessionManager;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-public class ChangePasswordActivity extends AppCompatActivity {
+public class ChangePasswordActivity extends NavigationBaseActivity {
     private TextInputEditText edtOldPassword, edtNewPassword, edtConfirmPassword;
     private TextInputLayout tilOldPassword, tilNewPassword, tilConfirmPassword;
     private Button btnChangePassword;
@@ -46,6 +46,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_change_password);
+        
+        // Setup Bottom Navigation
+        setupBottomNavigation(R.id.nav_more);
+        
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -97,11 +101,33 @@ public class ChangePasswordActivity extends AppCompatActivity {
             return;
         }
 
-        String email = sessionManager.getToken(); // hoặc lấy email từ session/user hiện tại
+        // Lấy email từ JWT token
+        String token = sessionManager.getToken();
+        String email = null;
+        if (token != null && JwtUtils.verifyJWT(token)) {
+            JSONObject payload = JwtUtils.decodePayload(token);
+            if (payload != null && payload.has("email")) {
+                email = payload.optString("email", null);
+            }
+        }
+
+        if (email == null) {
+            Toast.makeText(this, "Không tìm thấy thông tin người dùng", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         authRepository.changePassword(email, oldPass, newPass, new AuthRepository.ChangePasswordCallback() {
             @Override
             public void onSuccess() {
-                Toast.makeText(ChangePasswordActivity.this, "Đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChangePasswordActivity.this, "Đổi mật khẩu thành công. Vui lòng đăng nhập lại.", Toast.LENGTH_LONG).show();
+                
+                // Logout: Clear session
+                sessionManager.clear();
+                
+                // Redirect to Login
+                Intent intent = new Intent(ChangePasswordActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
                 finish();
             }
             @Override

@@ -14,11 +14,42 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PRM392_Final_PRJ">
         <activity
+            android:name=".activities.FeedbackActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.AnalyticsActivity"
+            android:exported="false" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="YOUR_API_KEY" />
+
+        <activity
+            android:name=".activities.MapScheduleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.AccountManagementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.EditUserProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.UserProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.TourDetailActivity"
             android:exported="false" />
         <activity
             android:name=".activities.HomeActivity"
             android:exported="true" />
+        <activity
+            android:name=".activities.MoreOptionsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.AboutUsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.InformationActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.ResetPasswordActivity"
             android:exported="true" />
@@ -33,15 +64,17 @@
             android:exported="true" />
         <activity
             android:name=".activities.LoginActivity"
-            android:exported="true" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+
         </activity>
     </application>
 

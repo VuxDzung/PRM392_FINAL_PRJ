@@ -29,6 +29,12 @@ public class UserEntity {
     @ColumnInfo(name = "role")
     public String role;
 
+    @ColumnInfo(name = "image")
+    public byte[] image;
+
+//    @ColumnInfo(name = "isDeleted")
+//    public boolean isDeleted;
+
     // --- Constructors ---
     public UserEntity() {
     }
@@ -94,8 +100,21 @@ public class UserEntity {
     public String getRole() {
         return role;
     }
-
     public void setRole(String role) {
         this.role = role;
     }
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+//    public boolean isDeleted() {
+//        return isDeleted;
+//    }
+//
+//    public void setDeleted(boolean deleted) {
+//        isDeleted = deleted;
+//    }
 }

@@ -42,6 +42,7 @@ public class AuthRepository {
 
                 session.saveToken(token);
                 session.saveRole(user.role);
+                session.saveUserId(user.id);
 
                 LoginResponse resp = new LoginResponse();
                 resp.setJwtToken(token);
@@ -105,7 +106,7 @@ public class AuthRepository {
                 return;
             }
             user.setPassword(hashPassword(newPassword));
-            userDao.insert(user); // update user
+            userDao.update(user); // update user
             mainHandler.post(callback::onSuccess);
         });
     }

@@ -22,4 +22,7 @@ public interface TourDao {
 
     @Query("SELECT * FROM tour ORDER BY price ASC")
     LiveData<List<TourEntity>> getAllTours();
+
+    @Query("SELECT COUNT(*) FROM tour")
+    int getTourCount();
 }
