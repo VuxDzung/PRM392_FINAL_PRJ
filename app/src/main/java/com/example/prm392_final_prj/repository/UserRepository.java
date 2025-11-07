@@ -65,4 +65,46 @@ public class UserRepository {
             if (callback != null) callback.onResult(true);
         });
     }
+
+    public interface UpdateUserCallback {
+        void onSuccess();
+        void onError(String message);
+    }
+
+    // Update user profile
+    public void updateUser(UserEntity user, UpdateUserCallback callback) {
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            try {
+                mUserDao.update(user);
+                if (callback != null) {
+                    callback.onSuccess();
+                }
+            } catch (Exception e) {
+                if (callback != null) {
+                    callback.onError(e.getMessage());
+                }
+            }
+        });
+    }
+
+    // Callback cho check phone
+    public interface CheckPhoneCallback {
+        void onResult(boolean isAvailable, UserEntity existingUser);
+    }
+
+    // Check duplicated phone number
+    public void checkPhoneAvailability(String phone, int currentUserId, CheckPhoneCallback callback) {
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            UserEntity existingUser = mUserDao.findByPhone(phone);
+            boolean isAvailable = (existingUser == null || existingUser.getId() == currentUserId);
+            if (callback != null) {
+                callback.onResult(isAvailable, existingUser);
+            }
+        });
+    }
+
+    // Get user synchronously (dùng trong background thread)
+    public UserEntity getUserByIdSync(int id) {
+        return mUserDao.getUserById(id).getValue();
+    }
 }

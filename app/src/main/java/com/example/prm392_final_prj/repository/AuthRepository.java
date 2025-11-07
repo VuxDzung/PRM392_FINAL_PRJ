@@ -42,6 +42,7 @@ public class AuthRepository {
 
                 session.saveToken(token);
                 session.saveRole(user.role);
+                session.saveUserId(user.id);
 
                 LoginResponse resp = new LoginResponse();
                 resp.setJwtToken(token);

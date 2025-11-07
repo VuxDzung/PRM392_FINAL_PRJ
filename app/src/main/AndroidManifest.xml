@@ -33,6 +33,12 @@
             android:name=".activities.MapScheduleActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.EditUserProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.UserProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.TourDetailActivity"
             android:exported="false" />
         <activity
