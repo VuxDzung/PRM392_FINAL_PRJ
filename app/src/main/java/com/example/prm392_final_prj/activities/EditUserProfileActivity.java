@@ -1,7 +1,11 @@
 package com.example.prm392_final_prj.activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.widget.*;
 
@@ -12,6 +16,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.Observer;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import com.example.prm392_final_prj.R;
@@ -30,6 +36,8 @@ public class EditUserProfileActivity extends NavigationBaseActivity {
     private SessionManager sessionManager;
     private int currentUserId;
     private UserEntity currentUser;
+    private static final int PICK_IMAGE_REQUEST = 1001;
+    private Bitmap selectedBitmap = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,10 +125,26 @@ public class EditUserProfileActivity extends NavigationBaseActivity {
             Toast.makeText(this, "Change password feature coming soon", Toast.LENGTH_SHORT).show();
         });
 
-        btnChangeImage.setOnClickListener(v -> {
-            // TODO: Implement image picker
-            Toast.makeText(this, "Change profile picture feature coming soon", Toast.LENGTH_SHORT).show();
-        });
+        btnChangeImage.setOnClickListener(v -> openImagePicker());
+    }
+
+    private void openImagePicker() {
+        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
+            Uri imageUri = data.getData();
+            try {
+                selectedBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                btnChangeImage.setImageBitmap(selectedBitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void saveUserProfile() {
@@ -182,6 +206,11 @@ public class EditUserProfileActivity extends NavigationBaseActivity {
         currentUser.setFirstname(firstName);
         currentUser.setLastname(lastName);
         currentUser.setPhone(phone);
+        if (selectedBitmap != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            selectedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            currentUser.setAvatar(stream.toByteArray());
+        }
 
         // Save to database using repository
         userRepository.updateUser(currentUser, new UserRepository.UpdateUserCallback() {
