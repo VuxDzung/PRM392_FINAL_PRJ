@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PRM392_Final_PRJ">
         <activity
+            android:name=".activities.AccountManagementActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.EditUserProfileActivity"
             android:exported="false" />
         <activity

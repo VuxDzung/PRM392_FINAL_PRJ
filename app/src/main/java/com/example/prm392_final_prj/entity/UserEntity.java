@@ -29,6 +29,9 @@ public class UserEntity {
     @ColumnInfo(name = "role")
     public String role;
 
+    @ColumnInfo(name = "isDeleted")
+    public boolean isDeleted;
+
     // --- Constructors ---
     public UserEntity() {
     }
@@ -97,5 +100,12 @@ public class UserEntity {
 
     public void setRole(String role) {
         this.role = role;
+    }
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }

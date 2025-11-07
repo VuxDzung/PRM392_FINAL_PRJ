@@ -2,6 +2,7 @@ package com.example.prm392_final_prj.repository;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import android.app.Application;
 import androidx.lifecycle.LiveData;
@@ -101,6 +102,10 @@ public class UserRepository {
                 callback.onResult(isAvailable, existingUser);
             }
         });
+    }
+
+    public List<UserEntity> getAll() {
+        return mUserDao.getAllUsersSync();
     }
 
     // Get user synchronously (dùng trong background thread)
