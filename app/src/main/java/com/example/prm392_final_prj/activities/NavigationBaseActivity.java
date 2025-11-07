@@ -34,8 +34,7 @@ public abstract class NavigationBaseActivity extends AppCompatActivity {
 
                     return true;
                 } else if (itemId == R.id.nav_more) {
-
-                    return true;
+                    intent = new Intent(this, MoreOptionsActivity.class);
                 }
 
                 if (intent != null) {

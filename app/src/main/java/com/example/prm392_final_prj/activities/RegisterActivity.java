@@ -106,7 +106,7 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
         // Password regex: at least 6 chars, 1 upper, 1 lower, 1 digit, 1 special char
-        String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$";
+        String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#])[A-Za-z\\d@$!%*?&#]{6,}$";
         if (!password.matches(passwordPattern)) {
             tilPassword.setError("Mật khẩu phải >=6 ký tự, có chữ hoa, chữ thường, số và ký tự đặc biệt");
             edtPassword.requestFocus();
@@ -130,8 +130,18 @@ public class RegisterActivity extends AppCompatActivity {
             public void onError(int code, String message) {
                 btnRegister.setEnabled(true);
                 if (code == 409) {
-                    tilEmail.setError("Email đã tồn tại");
-                    edtEmail.requestFocus();
+                    // Phân biệt lỗi trùng email hoặc trùng số điện thoại
+                    if (message != null && message.toLowerCase().contains("điện thoại")) {
+                        tilPhone.setError(message);
+                        edtPhone.requestFocus();
+                    } else {
+                        tilEmail.setError(message != null ? message : "Email đã tồn tại");
+                        edtEmail.requestFocus();
+                    }
+                } else if (code == 400 && message != null && message.toLowerCase().contains("điện thoại")) {
+                    // Lỗi validate số điện thoại
+                    tilPhone.setError(message);
+                    edtPhone.requestFocus();
                 } else {
                     tilEmail.setError(message != null ? message : "Lỗi đăng ký");
                 }
