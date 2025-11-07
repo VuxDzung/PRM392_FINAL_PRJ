@@ -14,7 +14,7 @@ import java.util.concurrent.Executors;
 
 @Database(entities = {TourEntity.class, UserEntity.class, TourScheduleEntity.class,
         BookingOrderEntity.class, ReviewEntity.class, NotificationEntity.class},
-        version = 2,
+        version = 3,
         exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {

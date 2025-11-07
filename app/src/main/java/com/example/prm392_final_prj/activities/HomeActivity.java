@@ -83,20 +83,19 @@ public class HomeActivity extends NavigationBaseActivity {
 
         setupSpinnerListeners();
 
-        repository.getAllTours().observe(this, new Observer<List<TourEntity>>() {
-            @Override
-            public void onChanged(List<TourEntity> tours) {
-                HomeActivity.this.allTours = tours;
+        repository.getAllTours().observe(this, tours -> {
+            HomeActivity.this.allTours = tours;
 
-                //add fake data for testing
-                if (tours == null || tours.isEmpty()) {
-                    allTours = mockData.getAllTours();
+            //add fake data for testing
+            if (tours == null || tours.isEmpty()) {
+                allTours = mockData.getAllTours();
+                for (TourEntity tour : allTours) {
+                    repository.insertTour(tour);
                 }
-
-                updateDynamicSpinners(allTours);
-                applyFilters();
-
             }
+
+            updateDynamicSpinners(allTours);
+            applyFilters();
         });
     }
 

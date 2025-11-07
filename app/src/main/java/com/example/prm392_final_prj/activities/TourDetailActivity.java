@@ -1,5 +1,6 @@
 package com.example.prm392_final_prj.activities;
 
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.widget.Button;
@@ -112,7 +113,9 @@ public class TourDetailActivity extends NavigationBaseActivity {
     }
 
     private void onReviewClick(){
-        Toast.makeText(this, "Review: " + detailLocation.getText(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, FeedbackActivity.class);
+        intent.putExtra(EXTRA_TOUR_ID, tourId);
+        startActivity(intent);
     }
 
     private void onScheduleClick(){

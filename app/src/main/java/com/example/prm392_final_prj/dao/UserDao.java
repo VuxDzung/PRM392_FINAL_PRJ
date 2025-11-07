@@ -9,10 +9,15 @@ import androidx.room.Update;
 
 import com.example.prm392_final_prj.entity.UserEntity;
 
+import java.util.List;
+
 @Dao
 public interface UserDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(UserEntity user);
+
+    @Query("SELECT * FROM user")
+    LiveData<List<UserEntity>> getAllUsers();
 
     @Query("SELECT * FROM user WHERE email = :email")
     LiveData<UserEntity> getUserByEmail(String email);

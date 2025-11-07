@@ -2,6 +2,7 @@ package com.example.prm392_final_prj.repository;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import android.app.Application;
 import androidx.lifecycle.LiveData;
@@ -42,6 +43,10 @@ public class UserRepository {
 
     public LiveData<UserEntity> getUserById(int id) {
         return mUserDao.getUserById(id);
+    }
+
+    public LiveData<List<UserEntity>> getAllUsers() {
+        return mUserDao.getAllUsers();
     }
 
     public LiveData<UserEntity> getUserByEmail(String email) {
