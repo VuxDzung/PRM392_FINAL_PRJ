@@ -20,6 +20,15 @@
             android:name=".activities.HomeActivity"
             android:exported="true" />
         <activity
+            android:name=".activities.MoreOptionsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.AboutUsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.InformationActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.ResetPasswordActivity"
             android:exported="true" />
         <activity
@@ -33,15 +42,17 @@
             android:exported="true" />
         <activity
             android:name=".activities.LoginActivity"
-            android:exported="true" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+
         </activity>
     </application>
 
