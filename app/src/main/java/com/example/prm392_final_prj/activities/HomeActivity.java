@@ -10,10 +10,6 @@ import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,12 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.prm392_final_prj.R;
 import com.example.prm392_final_prj.adapter.TourListAdapter;
 import com.example.prm392_final_prj.entity.TourEntity;
-import com.example.prm392_final_prj.mockdatas.TourMockData;
+import com.example.prm392_final_prj.mockdata.TourMockData;
 import com.example.prm392_final_prj.repository.TourRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 

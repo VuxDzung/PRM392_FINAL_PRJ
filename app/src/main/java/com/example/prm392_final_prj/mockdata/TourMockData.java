@@ -1,4 +1,4 @@
-package com.example.prm392_final_prj.mockdatas;
+package com.example.prm392_final_prj.mockdata;
 
 import com.example.prm392_final_prj.entity.TourEntity;
 
