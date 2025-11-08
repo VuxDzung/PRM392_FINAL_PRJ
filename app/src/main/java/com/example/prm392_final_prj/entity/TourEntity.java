@@ -31,8 +31,9 @@ public class TourEntity {
     @ColumnInfo(name = "transport")
     public String transport;
 
-    @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "image")
-    public byte[] image;
+
+    @ColumnInfo(name = "imagePath")
+    public String imagePath;
 
     @ColumnInfo(name = "maxCapacity")
     public int maxCapacity;
@@ -40,7 +41,7 @@ public class TourEntity {
     public TourEntity() {
     }
     @Ignore
-    public TourEntity(String location, String duration, double price, String departure, String destination, boolean airway, String transport, byte[] image, int maxCapacity) {
+    public TourEntity(String location, String duration, double price, String departure, String destination, boolean airway, String transport, String imagePath, int maxCapacity) {
         this.location = location;
         this.duration = duration;
         this.price = price;
@@ -48,7 +49,7 @@ public class TourEntity {
         this.destination = destination;
         this.airway = airway;
         this.transport = transport;
-        this.image = image;
+        this.imagePath = imagePath; // SỬA
         this.maxCapacity = maxCapacity;
     }
 
@@ -116,12 +117,12 @@ public class TourEntity {
         this.transport = transport;
     }
 
-    public byte[] getImage() {
-        return image;
+    public String getImagePath() {
+        return imagePath;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public int getMaxCapacity() {

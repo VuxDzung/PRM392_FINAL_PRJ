@@ -1,7 +1,8 @@
 package com.example.prm392_final_prj.activities;
 
 import android.content.Intent;
-import android.graphics.BitmapFactory;
+// SỬA: Import ImageUtils
+import com.example.prm392_final_prj.utils.ImageUtils;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -105,11 +106,19 @@ public class TourDetailActivity extends NavigationBaseActivity {
 
         detailSeatsAvailable.setText(String.format(Locale.US, "%d seats", tour.maxCapacity));
 
-        if (tour.image != null && tour.image.length > 0) {
-            detailImage.setImageBitmap(BitmapFactory.decodeByteArray(tour.image, 0, tour.image.length));
-        } else {
-            detailImage.setImageResource(R.drawable.ic_launcher_background);
-        }
+        // SỬA: Thay thế logic đọc BLOB (byte[]) bằng logic đọc File Path
+        // Code cũ:
+        // if (tour.image != null && tour.image.length > 0) {
+        //     detailImage.setImageBitmap(BitmapFactory.decodeByteArray(tour.image, 0, tour.image.length));
+        // } else {
+        //     detailImage.setImageResource(R.drawable.ic_launcher_background);
+        // }
+
+        // Code mới:
+        // Giả định TourEntity đã được sửa để có "public String imagePath;"
+        // Hàm ImageUtils.loadImageIntoView đã bao gồm cả logic đặt ảnh mặc định
+        // nếu imagePath null, rỗng, hoặc file không tồn tại.
+        ImageUtils.loadImageIntoView(tour.imagePath, detailImage, R.drawable.ic_launcher_background);
     }
 
     private void onReviewClick(){
