@@ -49,4 +49,14 @@
         android:layout_weight="1"
         android:scrollbars="vertical" />
 
+    <FrameLayout
+        android:id="@+id/admin_bottom_nav_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <include layout="@layout/activity_admin_nav_base" />
+    </FrameLayout>
 </LinearLayout>

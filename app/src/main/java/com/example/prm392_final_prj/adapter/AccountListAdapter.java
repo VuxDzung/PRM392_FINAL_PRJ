@@ -43,7 +43,9 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
         holder.tvAccId.setText(String.valueOf(user.getId()));
         holder.accountNameText.setText(user.getFirstname() + " " + user.getLastname());
         holder.accountEmailText.setText(user.getEmail());
-
+        holder.deleteButton.setEnabled(!(user.getRole().equalsIgnoreCase("ROLE_ADMIN") ||
+                                        (user.getRole().equalsIgnoreCase("admin"))
+                                        ));
         holder.deleteButton.setOnClickListener(v -> {
             if (context instanceof AccountManagementActivity) {
                 ((AccountManagementActivity) context).deleteUser(user);
