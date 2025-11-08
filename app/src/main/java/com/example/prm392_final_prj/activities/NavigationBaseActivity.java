@@ -23,13 +23,14 @@ public abstract class NavigationBaseActivity extends AppCompatActivity {
             navView.setOnItemSelectedListener(item -> {
                 int itemId = item.getItemId();
 
+
                 Intent intent = null;
 
                 if (itemId == R.id.nav_home) {
                     intent = new Intent(this, HomeActivity.class);
                 } else if (itemId == R.id.nav_profile) {
+
                     intent = new Intent(this, UserProfileActivity.class);
-//                    return true;
                 } else if (itemId == R.id.nav_notifications) {
 
                     return true;

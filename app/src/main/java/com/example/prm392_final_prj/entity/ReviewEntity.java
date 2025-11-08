@@ -32,7 +32,7 @@ public class ReviewEntity {
     @ColumnInfo(name = "content")
     public String content;
 
-    @ColumnInfo(name = "departTime")
+    @ColumnInfo(name = "timeStamp")
     public Date timeStamp;
 
     @ColumnInfo(name = "tourId")
@@ -44,7 +44,7 @@ public class ReviewEntity {
     // --- Constructors ---
     public ReviewEntity() {
     }
-
+    @Ignore
     public ReviewEntity(int id, float rate, String content, Date timeStamp, int tourId, int userId) {
         this.id = id;
         this.rate = rate;

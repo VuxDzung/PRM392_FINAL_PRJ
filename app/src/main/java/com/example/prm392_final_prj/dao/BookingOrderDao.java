@@ -5,6 +5,8 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.RewriteQueriesToDropUnusedColumns;
+
 import com.example.prm392_final_prj.entity.BookingOrderEntity;
 
 import java.util.Date;

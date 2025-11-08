@@ -90,7 +90,8 @@ public class HomeActivity extends NavigationBaseActivity {
             if (tours == null || tours.isEmpty()) {
                 allTours = mockData.getAllTours();
                 for (TourEntity tour : allTours) {
-                    repository.insertTour(tour);
+                    //fix insert fake data
+                    repository.insertTour(tour, null);
                 }
             }
 

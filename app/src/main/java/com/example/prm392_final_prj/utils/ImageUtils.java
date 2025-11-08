@@ -11,7 +11,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 public class ImageUtils {
     private static final String PROFILE_IMAGE_DIR = "profile_images";
-
+    private static final String TOUR_IMAGE_DIR = "tour_images";
     /**
      * Lưu ảnh từ Uri vào internal storage
      * @param context Context
@@ -137,5 +137,49 @@ public class ImageUtils {
             e.printStackTrace();
             return null;
         }
+    }
+
+    private static String saveImageFromUri(Context context, Uri imageUri, String subDirectory, String fileName, int maxWidth, int maxHeight) {
+        try {
+            // 1. Đọc ảnh từ Uri
+            InputStream inputStream = context.getContentResolver().openInputStream(imageUri);
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            inputStream.close();
+
+            // 2. Compress và resize ảnh
+            Bitmap resizedBitmap = resizeBitmap(bitmap, maxWidth, maxHeight);
+
+            // 3. Tạo thư mục nếu chưa có
+            File directory = new File(context.getFilesDir(), subDirectory);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+
+            // 4. Tạo file
+            File file = new File(directory, fileName);
+
+            // 5. Lưu ảnh (đã nén)
+            FileOutputStream fos = new FileOutputStream(file);
+            resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 85, fos);
+            fos.close();
+
+            // 6. Giải phóng bộ nhớ
+            bitmap.recycle();
+            resizedBitmap.recycle();
+
+            // 7. Trả về đường dẫn
+            return file.getAbsolutePath();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String saveTourImage(Context context, Uri imageUri) {
+        // Tạo tên file unique dùng timestamp
+        String fileName = "tour_" + System.currentTimeMillis() + ".jpg";
+        // Resize 800x800 cho ảnh tour (lớn hơn profile)
+        return saveImageFromUri(context, imageUri, TOUR_IMAGE_DIR, fileName, 800, 800);
     }
 }
