@@ -16,7 +16,8 @@
         android:textColor="@color/cyan_primary"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:paddingBottom="12dp" />
+        android:paddingBottom="12dp"
+        android:layout_gravity="center_horizontal"/>
 
     <!-- Thanh tìm kiếm -->
     <com.google.android.material.textfield.TextInputLayout

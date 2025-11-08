@@ -14,13 +14,14 @@
 
         <!-- Header -->
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Analytics Overview"
             android:textStyle="bold"
             android:textSize="22sp"
             android:textColor="@android:color/black"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center_horizontal"/>
 
         <!-- Summary cards -->
         <LinearLayout

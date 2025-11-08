@@ -32,8 +32,7 @@ public abstract class NavigationBaseActivity extends AppCompatActivity {
 
                     intent = new Intent(this, UserProfileActivity.class);
                 } else if (itemId == R.id.nav_notifications) {
-
-                    return true;
+                    intent = new Intent(this, NotificationActivity.class);
                 } else if (itemId == R.id.nav_more) {
                     intent = new Intent(this, MoreOptionsActivity.class);
                 }
