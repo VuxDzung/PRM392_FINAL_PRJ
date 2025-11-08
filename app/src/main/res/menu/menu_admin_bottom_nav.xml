@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_analytics"
+        android:title="Analytics"
+        />
+
+    <item
+        android:id="@+id/nav_accounts"
+        android:title="Accounts" />
+
+    <item
+        android:id="@+id/nav_tours"
+        android:title="Tours" />
+
+    <item
+        android:id="@+id/nav_bookings"
+        android:title="Bookings" />
+
+</menu>

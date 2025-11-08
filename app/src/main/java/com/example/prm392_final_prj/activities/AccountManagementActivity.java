@@ -24,7 +24,7 @@ import com.example.prm392_final_prj.repository.UserRepository;
 
 import java.util.*;
 
-public class AccountManagementActivity extends NavigationBaseActivity {
+public class AccountManagementActivity extends AdminNavBaseActivity {
     private RecyclerView recyclerView;
     private AccountListAdapter adapter;
     private EditText searchBar;
@@ -39,11 +39,12 @@ public class AccountManagementActivity extends NavigationBaseActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_account_management);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        setupBottomNavigation(R.id.nav_accounts);
+//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+//            return insets;
+//        });
         initView();
         loadAllAccounts();
     }

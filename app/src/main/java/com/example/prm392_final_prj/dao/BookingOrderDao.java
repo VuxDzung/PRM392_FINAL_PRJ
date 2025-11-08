@@ -24,10 +24,14 @@ public interface BookingOrderDao {
     @Query("SELECT COUNT(*) FROM booking_order")
     int getTotalBookingsSync();
 
-    @Query("SELECT strftime('%m', startTime) as month, COUNT(*) FROM booking_order WHERE startTime BETWEEN :from AND :to GROUP BY month")
-    List<Integer> getBookingCountByMonth(Date from, Date to);
+    @Query("SELECT CAST(strftime('%m', startTime) AS INTEGER) AS month, COUNT(*) AS count " +
+            "FROM booking_order WHERE startTime BETWEEN :from AND :to GROUP BY month")
+    List<MonthlyBookingStat> getBookingCountByMonth(Date from, Date to);
 
-    @Query("SELECT strftime('%m', startTime) as month, SUM(adultAmount*price) FROM booking_order bo JOIN tour t ON bo.tourId=t.id WHERE startTime BETWEEN :from AND :to GROUP BY month")
-    List<Double> getRevenueByMonth(Date from, Date to);
+    @Query("SELECT CAST(strftime('%m', bo.startTime) AS INTEGER) AS month, " +
+            "SUM(bo.adultAmount * t.price) AS revenue " +
+            "FROM booking_order bo JOIN tour t ON bo.tourId = t.id " +
+            "WHERE bo.startTime BETWEEN :from AND :to GROUP BY month")
+    List<MonthlyRevenueStat> getRevenueByMonth(Date from, Date to);
     //endregion
 }

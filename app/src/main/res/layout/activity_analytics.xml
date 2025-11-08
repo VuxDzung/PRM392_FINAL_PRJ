@@ -14,6 +14,8 @@
 
         <!-- Header -->
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="Analytics Overview"
             android:textStyle="bold"
             android:textSize="22sp"
@@ -41,12 +43,16 @@
 
                 <TextView
                     android:id="@+id/tvTotalTours"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="0"
                     android:textSize="22sp"
                     android:textColor="@android:color/black"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="Total Tours"
                     android:textColor="@android:color/black" />
             </LinearLayout>
@@ -62,12 +68,16 @@
 
                 <TextView
                     android:id="@+id/tvTotalCustomers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="0"
                     android:textSize="22sp"
                     android:textColor="@android:color/black"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="Total Customers"
                     android:textColor="@android:color/black" />
             </LinearLayout>
@@ -84,8 +94,8 @@
             <EditText
                 android:id="@+id/etFromDate"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:hint="From date"
                 android:focusable="false"
                 android:inputType="none"
@@ -94,8 +104,8 @@
             <EditText
                 android:id="@+id/etToDate"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:hint="To date"
                 android:focusable="false"
                 android:inputType="none"
@@ -112,6 +122,8 @@
 
         <!-- Bookings Chart -->
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Total Bookings"
             android:textStyle="bold"
             android:textSize="18sp"
@@ -125,6 +137,8 @@
 
         <!-- Revenue Chart -->
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Total Revenue"
             android:textStyle="bold"
             android:textSize="18sp"
@@ -134,5 +148,16 @@
             android:id="@+id/lineChartRevenue"
             android:layout_width="match_parent"
             android:layout_height="250dp" />
+
+        <FrameLayout
+            android:id="@+id/admin_bottom_nav_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <include layout="@layout/activity_admin_nav_base" />
+        </FrameLayout>
     </LinearLayout>
 </ScrollView>
