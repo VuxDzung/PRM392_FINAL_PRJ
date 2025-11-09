@@ -7,5 +7,5 @@
 
     <style name="Theme.PRM392_Final_PRJ" parent="Base.Theme.PRM392_Final_PRJ" />
 
-    <style name="Theme.Tour_Payment" parent="Theme.Material3.DayNight"/>
+    <style name="Theme.PageWithActionBar" parent="Theme.Material3.DayNight"/>
 </resources>

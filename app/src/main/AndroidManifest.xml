@@ -19,7 +19,7 @@
             android:exported="false"
             android:label="Tour Booking Booked"
             android:parentActivityName=".activities.TourBookingAdmin.TourBookingListActivity"
-            android:theme="@style/Theme.Tour_Payment"/>
+            android:theme="@style/Theme.PageWithActionBar"/>
         <activity
             android:name=".activities.TourBookingAdmin.TourBookingListActivity"
             android:exported="false" />
@@ -31,13 +31,13 @@
             android:exported="false"
             android:label="My Tour"
             android:parentActivityName=".activities.MoreOptionsActivity"
-            android:theme="@style/Theme.Tour_Payment" />
+            android:theme="@style/Theme.PageWithActionBar" />
         <activity
             android:name=".activities.TourBooking.TourPurchaseActivity"
             android:exported="false"
             android:label="Tour Schedule And Price"
             android:parentActivityName=".activities.HomeActivity"
-            android:theme="@style/Theme.Tour_Payment" />
+            android:theme="@style/Theme.PageWithActionBar" />
         <activity
             android:name=".activities.FeedbackActivity"
             android:exported="false" />
