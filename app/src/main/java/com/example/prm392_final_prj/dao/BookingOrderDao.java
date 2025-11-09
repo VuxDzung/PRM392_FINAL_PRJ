@@ -17,6 +17,15 @@ public interface BookingOrderDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(BookingOrderEntity bookingOrder);
 
+    @Query("UPDATE booking_order SET status = :status WHERE id = :bookingId")
+    void updateStatus(int bookingId, int status);
+
+    @Query("DELETE FROM booking_order WHERE id = :bookingId")
+    void deleteBooking(int bookingId);
+
+    @Query("SELECT * FROM booking_order WHERE tourId = :tourId")
+    LiveData<List<BookingOrderEntity>> getBookingsByTourId(int tourId);
+
     @Query("SELECT * FROM booking_order WHERE userId = :userId ORDER BY startTime DESC")
     LiveData<List<BookingOrderEntity>> getBookingsForUser(int userId);
 

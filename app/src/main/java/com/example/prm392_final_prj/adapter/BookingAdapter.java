@@ -14,6 +14,7 @@ import com.example.prm392_final_prj.R;
 import com.example.prm392_final_prj.entity.BookingOrderEntity;
 import com.example.prm392_final_prj.entity.TourEntity;
 import com.example.prm392_final_prj.repository.TourRepository;
+import com.example.prm392_final_prj.utils.BookingStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,24 +47,11 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
         holder.tourName.setText(tour.location + " " + tour.duration);
         holder.tourDate.setText("Start Time: " + tour.duration);
         holder.tourPrice.setText("Price: " + tour.price);
-        String status = getStatusString(booking.status);
+        String status = BookingStatus.getStatusString(booking.status);
         holder.tourStatus.setText("Status: " + status);
     }
 
-    private String getStatusString(int status){
-        switch (status) {
-            case 0:
-                return "Pending";
-            case 1:
-                return "Confirmed";
-            case 2:
-                return "Cancelled";
-            case 3:
-                return "Completed";
-            default:
-                return "Unknown";
-        }
-    }
+
 
     @Override
     public int getItemCount() {

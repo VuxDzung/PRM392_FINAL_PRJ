@@ -10,6 +10,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.prm392_final_prj.R;
+import com.example.prm392_final_prj.activities.TourBookingAdmin.TourBookingListActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class AdminNavBaseActivity extends AppCompatActivity {
@@ -35,7 +36,7 @@ public class AdminNavBaseActivity extends AppCompatActivity {
             } else if (itemId == R.id.nav_tours) {
 
             } else if (itemId == R.id.nav_bookings) {
-
+                intent = new Intent(this, TourBookingListActivity.class);
             }
 
             if (intent != null) {

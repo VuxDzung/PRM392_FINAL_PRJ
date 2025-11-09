@@ -22,7 +22,23 @@ public class BookingRepository {
         });
     }
 
+    public void updateBookingStatus(int bookingId, int status){
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            mBookingOrderDao.updateStatus(bookingId, status);
+        });
+    }
+
+    public void deleteBooking(int bookingId){
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            mBookingOrderDao.deleteBooking(bookingId);
+        });
+    }
+
     public LiveData<List<BookingOrderEntity>> getBookingsForUser(int userId) {
         return mBookingOrderDao.getBookingsForUser(userId);
+    }
+
+    public LiveData<List<BookingOrderEntity>> getBookingsByTourId(int tourId){
+        return mBookingOrderDao.getBookingsByTourId(tourId);
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:adroid="http://schemas.android.com/apk/distribution">
+    xmlns:adroid="http://schemas.android.com/apk/distribution"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -15,14 +15,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PRM392_Final_PRJ">
         <activity
+            android:name=".activities.TourBookingAdmin.BookingListInTourActivity"
+            android:exported="false"
+            android:label="Tour Booking Booked"
+            android:parentActivityName=".activities.TourBookingAdmin.TourBookingListActivity"
+            android:theme="@style/Theme.Tour_Payment"/>
+        <activity
+            android:name=".activities.TourBookingAdmin.TourBookingListActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.AdminNavBaseActivity"
             android:exported="false" />
         <activity
             android:name=".activities.TourBooking.BookingStatusActivity"
+            android:exported="false"
             android:label="My Tour"
             android:parentActivityName=".activities.MoreOptionsActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Tour_Payment"/>
+            android:theme="@style/Theme.Tour_Payment" />
         <activity
             android:name=".activities.TourBooking.TourPurchaseActivity"
             android:exported="false"
@@ -39,28 +48,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="YOUR_API_KEY" />
-        <activity
-            android:name=".activities.NotificationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.MapScheduleActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.AccountManagementActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.EditUserProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.UserProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.TourDetailActivity"
-            android:exported="false" />
-
-        <activity android:name=".activities.MapPickerActivity"
-            android:exported="false" />
-
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -76,6 +63,27 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="YOUR_API_KEY" />
 
+        <activity
+            android:name=".activities.NotificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.MapScheduleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.AccountManagementActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.EditUserProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.UserProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.TourDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.MapPickerActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.EditTourActivity"
             android:exported="false" />
@@ -119,7 +127,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".MainActivity"
             android:exported="true" />
