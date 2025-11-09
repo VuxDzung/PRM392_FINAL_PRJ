@@ -136,7 +136,7 @@ public class ScheduleEditAdapter extends RecyclerView.Adapter<ScheduleEditAdapte
             btnDelete = itemView.findViewById(R.id.btnDeleteScheduleItem);
 
             btnDelete.setOnClickListener(v -> {
-                int position = getBindingAdapterPosition();
+                int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
                     removeItem(position);
                 }
@@ -162,14 +162,14 @@ public class ScheduleEditAdapter extends RecyclerView.Adapter<ScheduleEditAdapte
             updateCoordinatesDisplay(schedule);
 
             placeWatcher = createWatcher(text -> {
-                int pos = getBindingAdapterPosition();
+                int pos = getAdapterPosition();
                 if (pos != RecyclerView.NO_POSITION) {
                     mSchedules.get(pos).setPlace(text);
                 }
             });
 
             descWatcher = createWatcher(text -> {
-                int pos = getBindingAdapterPosition();
+                int pos = getAdapterPosition();
                 if (pos != RecyclerView.NO_POSITION) {
                     mSchedules.get(pos).setDescription(text);
                 }
@@ -181,7 +181,7 @@ public class ScheduleEditAdapter extends RecyclerView.Adapter<ScheduleEditAdapte
             etTime.setOnClickListener(v -> showDateTimePicker(schedule));
 
             btnPickLocation.setOnClickListener(v -> {
-                int pos = getBindingAdapterPosition();
+                int pos = getAdapterPosition();
                 if (pos != RecyclerView.NO_POSITION && mapPickListener != null) {
                     mapPickListener.onPickLocationClick(pos, mSchedules.get(pos));
                 }
@@ -237,7 +237,7 @@ public class ScheduleEditAdapter extends RecyclerView.Adapter<ScheduleEditAdapte
                 @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
                 @Override
                 public void afterTextChanged(Editable s) {
-                    int pos = getBindingAdapterPosition();
+                    int pos = getAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION) {
                         listener.onChanged(s.toString());
                     }

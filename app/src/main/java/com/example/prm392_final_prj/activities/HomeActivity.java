@@ -2,6 +2,7 @@ package com.example.prm392_final_prj.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -10,6 +11,11 @@ import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +28,8 @@ import com.example.prm392_final_prj.mockdata.TourMockData;
 import com.example.prm392_final_prj.repository.TourRepository;
 
 import java.util.ArrayList;
+import java.text.Normalizer;
+import java.util.regex.Pattern;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -43,6 +51,7 @@ public class HomeActivity extends NavigationBaseActivity {
     private Spinner spinnerSeats;
     private EditText searchEditText;
     private FrameLayout searchIconContainer;
+    private FrameLayout micIconContainer;
 
     //filter current data
     private String currentPriceFilter = "Mức giá";
@@ -51,6 +60,23 @@ public class HomeActivity extends NavigationBaseActivity {
     private String currentTransportFilter = "Phương tiện";
     private String currentAirwayFilter = "Loại chuyến bay";
     private String currentSeatsFilter = "Số lượng khách";
+
+    // Voice search result launcher
+    private final ActivityResultLauncher<Intent> voiceSearchResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    Intent data = result.getData();
+                    ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    if (results != null && !results.isEmpty()) {
+                        String spokenText = results.get(0);
+                        searchEditText.setText(spokenText);
+                        applyFilters();
+                    }
+                } else {
+                    Toast.makeText(this, "Không nhận dạng được giọng nói.", Toast.LENGTH_SHORT).show();
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +106,10 @@ public class HomeActivity extends NavigationBaseActivity {
 
         searchIconContainer.setOnClickListener(v -> {
             applyFilters();
+        });
+        micIconContainer = findViewById(R.id.mic_icon_container);
+        micIconContainer.setOnClickListener(v -> {
+            startVoiceSearch();
         });
 
         setupSpinnerListeners();
@@ -148,7 +178,8 @@ public class HomeActivity extends NavigationBaseActivity {
     private void applyFilters() {
         if (allTours.isEmpty()) return;
 
-        String searchText = searchEditText.getText().toString().trim().toLowerCase();
+        String rawSearchText = searchEditText.getText().toString();
+        String normalizedSearchText = normalizeString(rawSearchText);
 
         List<TourEntity> filteredList = allTours.stream()
                 .filter(this::filterByPrice)
@@ -157,7 +188,7 @@ public class HomeActivity extends NavigationBaseActivity {
                 .filter(this::filterByTransport)
                 .filter(this::filterByAirway)
                 .filter(this::filterBySeats)
-                .filter(tour -> filterBySearch(tour, searchText))
+                .filter(tour -> filterBySearch(tour, normalizedSearchText))
                 .collect(Collectors.toList());
 
         tourList.clear();
@@ -166,18 +197,27 @@ public class HomeActivity extends NavigationBaseActivity {
         adapter.notifyDataSetChanged();
     }
 
+    private String normalizeString(String input) {
+        if (input == null || input.isEmpty()) {
+            return "";
+        }
+        String temp = Normalizer.normalize(input, Normalizer.Form.NFD);
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        return pattern.matcher(temp).replaceAll("").toLowerCase().replaceAll("\\s+", "");
+    }
+
     private boolean filterBySearch(TourEntity tour, String searchText) {
         if (searchText.isEmpty()) {
             return true;
         }
 
-        String location = tour.location != null ? tour.location.toLowerCase() : "";
-        String departure = tour.departure != null ? tour.departure.toLowerCase() : "";
-        String destination = tour.destination != null ? tour.destination.toLowerCase() : "";
+        String normalizedSearchText = normalizeString(searchText);
 
-        return location.contains(searchText) ||
-                departure.contains(searchText) ||
-                destination.contains(searchText);
+        String normalizedLocation = normalizeString(tour.location);
+        String normalizedDestination = normalizeString(tour.destination);
+
+        return normalizedLocation.contains(normalizedSearchText) ||
+                normalizedDestination.contains(normalizedSearchText);
     }
 
     private boolean filterByPrice(TourEntity tour) {
@@ -276,6 +316,23 @@ public class HomeActivity extends NavigationBaseActivity {
         }
 
         return false;
+    }
+
+    private void startVoiceSearch() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "vi-VN");
+
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Nói địa điểm hoặc tên tour cần tìm...");
+
+        try {
+            voiceSearchResultLauncher.launch(intent);
+        } catch (Exception e) {
+            Toast.makeText(this, "Thiết bị không hỗ trợ ghi âm giọng nói.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void onSeeMoreClick(TourEntity tour) {

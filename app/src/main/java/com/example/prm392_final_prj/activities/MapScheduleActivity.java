@@ -1,6 +1,7 @@
 package com.example.prm392_final_prj.activities;
 
 import android.os.Bundle;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -8,26 +9,38 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prm392_final_prj.R;
-// SỬA: Thêm các import cần thiết
+
+import com.example.prm392_final_prj.adapter.TourScheduleAdapter;
 import com.example.prm392_final_prj.dto.request.MapMarker;
 import com.example.prm392_final_prj.entity.TourScheduleEntity;
 import com.example.prm392_final_prj.fragment.GoogleMapsFragment;
+import com.example.prm392_final_prj.mockdata.ScheduleMockData;
+import com.example.prm392_final_prj.mockdata.TourMockData;
 import com.example.prm392_final_prj.repository.TourRepository;
 import com.example.prm392_final_prj.utils.MapMode;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MapScheduleActivity extends AppCompatActivity {
-
-    // SỬA: Thêm hằng số để nhận Tour ID (giống TourDetailActivity)
     public static final String EXTRA_TOUR_ID = "tour_id";
 
     private TourRepository tourRepository;
     private int tourId = -1;
-    private boolean isMapLoaded = false; // Flag để đảm bảo map chỉ load 1 lần
+    private boolean isMapLoaded = false; //flag
+
+    // Mockdata for testing
+    private ScheduleMockData mockData = new ScheduleMockData();
+
+    private RecyclerView recyclerViewSchedule;
+    private TourScheduleAdapter scheduleAdapter;
+    private GoogleMapsFragment mapFragment;
+    private BottomSheetBehavior<LinearLayout> bottomSheetBehavior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +52,8 @@ public class MapScheduleActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        // SỬA: Khởi tạo repository
         tourRepository = new TourRepository(getApplication());
 
-        // SỬA: Lấy tourId từ Intent
         tourId = getIntent().getIntExtra(EXTRA_TOUR_ID, -1);
 
         if (tourId == -1) {
@@ -52,53 +62,66 @@ public class MapScheduleActivity extends AppCompatActivity {
             return;
         }
 
-        // SỬA: Tải dữ liệu schedule và gắn Fragment
+        recyclerViewSchedule = findViewById(R.id.recycler_view_schedule);
+        scheduleAdapter = new TourScheduleAdapter(this);
+        recyclerViewSchedule.setAdapter(scheduleAdapter);
+        recyclerViewSchedule.setLayoutManager(new LinearLayoutManager(this));
+
+        LinearLayout bottomSheet = findViewById(R.id.bottom_sheet);
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+
+        bottomSheetBehavior.setPeekHeight(300);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
         loadSchedulesAndSetupMap();
     }
 
-    /**
-     * SỬA: Thêm hàm để tải schedules từ DB và thiết lập bản đồ
-     */
     private void loadSchedulesAndSetupMap() {
         tourRepository.getSchedulesForTour(tourId).observe(this, schedules -> {
+            if (schedules == null || schedules.isEmpty()) {
+                schedules = mockData.getSchedulesForTour(tourId);
+//                Toast.makeText(this, "No schedules found for this tour", Toast.LENGTH_SHORT).show();
+//                return;
+            }
 
-            // Chỉ load bản đồ 1 lần duy nhất khi có dữ liệu
-            // và isMapLoaded == false
-            if (!isMapLoaded && schedules != null && !schedules.isEmpty()) {
-                isMapLoaded = true; // Đặt flag để không load lại
+            if (scheduleAdapter != null) {
+                scheduleAdapter.setSchedules(schedules);
+            }
 
-                // Bước 1: Chuyển đổi List<TourScheduleEntity> thành ArrayList<MapMarker>
+            if (!isMapLoaded) {
+                isMapLoaded = true; //flag
+
                 ArrayList<MapMarker> mapMarkers = new ArrayList<>();
                 for (TourScheduleEntity schedule : schedules) {
-                    // Chỉ thêm vào bản đồ nếu schedule có tọa độ hợp lệ
                     if (schedule.hasValidCoordinates()) {
                         mapMarkers.add(new MapMarker(
-                                String.valueOf(schedule.getId()), // ID của marker
-                                schedule.getLatitude(),           // Latitude
-                                schedule.getLongitude(),          // Longitude
-                                schedule.getPlace()               // Tiêu đề của marker
+                                String.valueOf(schedule.getId()),
+                                schedule.getLatitude(),
+                                schedule.getLongitude(),
+                                schedule.getPlace()
                         ));
                     }
                 }
 
-                // Nếu không có marker nào có tọa độ, thông báo và không làm gì
                 if (mapMarkers.isEmpty()) {
                     Toast.makeText(this, "No schedules with locations to display", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                // Bước 2: Khởi tạo GoogleMapsFragment với chế độ VIEW và danh sách marker
-                GoogleMapsFragment mapFragment = GoogleMapsFragment.newInstance(MapMode.VIEW, mapMarkers);
+                mapFragment = GoogleMapsFragment.newInstance(MapMode.VIEW, mapMarkers);
 
-                // Bước 3: Thêm Fragment vào container trong file XML
-                // *** LƯU Ý QUAN TRỌNG: ***
-                // Bạn cần đảm bảo file R.layout.activity_map_schedule có một container
-                // (ví dụ: FrameLayout hoặc FragmentContainerView) với ID là "map_container"
-                // để code bên dưới hoạt động.
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.map_container, mapFragment)
                         .commit();
             }
         });
+    }
+
+    public void onScheduleClick(double latitude, double longitude) {
+        if (mapFragment != null) {
+            mapFragment.moveCameraTo(latitude, longitude, 16f);
+        }
+
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 }
