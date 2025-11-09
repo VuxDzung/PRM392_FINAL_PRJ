@@ -6,9 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.prm392_final_prj.R;
+import com.example.prm392_final_prj.activities.MapScheduleActivity;
 import com.example.prm392_final_prj.entity.TourScheduleEntity;
 import com.example.prm392_final_prj.utils.ImageUtils;
 import com.example.prm392_final_prj.utils.TimeConverter;
@@ -21,10 +25,13 @@ import java.util.Locale;
 public class TourScheduleAdapter extends RecyclerView.Adapter<TourScheduleAdapter.ScheduleViewHolder> {
 
     private final LayoutInflater mInflater;
-    private List<TourScheduleEntity> mSchedules = Collections.emptyList(); // Cached copy
+    private List<TourScheduleEntity> mSchedules = Collections.emptyList();
     private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+    private int selectedPosition = -1;
+    private Context context;
 
     public TourScheduleAdapter(Context context) {
+        this.context = context;
         mInflater = LayoutInflater.from(context);
     }
 
@@ -51,6 +58,28 @@ public class TourScheduleAdapter extends RecyclerView.Adapter<TourScheduleAdapte
         } else {
             holder.locationPhoto.setImageResource(R.drawable.ic_launcher_background);
         }
+
+        if (selectedPosition == position) {
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.cyan_light_gray));
+            holder.locationAddress.setTextColor(ContextCompat.getColor(context, R.color.white));
+        } else {
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.cyan_light));
+            holder.locationAddress.setTextColor(ContextCompat.getColor(context, R.color.text_secondary));
+        }
+
+        holder.itemView.setOnClickListener(v -> {
+            if (current.hasValidCoordinates()) {
+                int oldPosition = selectedPosition;
+                selectedPosition = position;
+
+                notifyItemChanged(oldPosition);
+                notifyItemChanged(selectedPosition);
+
+                ((MapScheduleActivity) context).onScheduleClick(current.getLatitude(), current.getLongitude());
+            } else {
+                Toast.makeText(context, "Location coordinates not available.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void setSchedules(List<TourScheduleEntity> schedules) {
