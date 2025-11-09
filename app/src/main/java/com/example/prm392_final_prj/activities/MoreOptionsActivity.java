@@ -9,12 +9,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.prm392_final_prj.R;
+import com.example.prm392_final_prj.activities.TourBooking.BookingStatusActivity;
 import com.example.prm392_final_prj.utils.SessionManager;
 import com.google.android.material.card.MaterialCardView;
 
 public class MoreOptionsActivity extends NavigationBaseActivity {
 
-    private MaterialCardView btnChangePassword, btnAboutUs, btnInformation, btnLogout;
+    private MaterialCardView btnChangePassword, btnAboutUs, btnInformation, btnBookingStatus, btnLogout;
     private SessionManager sessionManager;
 
     @Override
@@ -37,6 +38,7 @@ public class MoreOptionsActivity extends NavigationBaseActivity {
         btnChangePassword = findViewById(R.id.btnChangePassword);
         btnAboutUs = findViewById(R.id.btnAboutUs);
         btnInformation = findViewById(R.id.btnInformation);
+        btnBookingStatus = findViewById(R.id.btnBookingStatus);
         btnLogout = findViewById(R.id.btnLogout);
 
         btnChangePassword.setOnClickListener(v -> {
@@ -49,6 +51,10 @@ public class MoreOptionsActivity extends NavigationBaseActivity {
 
         btnInformation.setOnClickListener(v -> {
             startActivity(new Intent(this, InformationActivity.class));
+        });
+
+        btnBookingStatus.setOnClickListener(v -> {
+            startActivity(new Intent(this, BookingStatusActivity.class));
         });
 
         btnLogout.setOnClickListener(v -> {

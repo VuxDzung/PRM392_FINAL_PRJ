@@ -1,6 +1,8 @@
 package com.example.prm392_final_prj.utils;
 
 import androidx.room.TypeConverter;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -77,6 +79,18 @@ public class TimeConverter {
         }
 
         return sb.toString() + " ago";
+    }
+
+    public static Date parseDateString(String dateStr){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = null;
+
+        try {
+            date = formatter.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
     }
     @TypeConverter
     public static Date fromTimestamp(Long value) {

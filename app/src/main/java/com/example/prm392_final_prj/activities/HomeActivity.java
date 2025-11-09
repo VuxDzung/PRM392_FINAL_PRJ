@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prm392_final_prj.R;
+import com.example.prm392_final_prj.activities.TourBooking.TourPurchaseActivity;
 import com.example.prm392_final_prj.adapter.TourListAdapter;
 import com.example.prm392_final_prj.entity.TourEntity;
 import com.example.prm392_final_prj.mockdata.TourMockData;
@@ -283,6 +284,9 @@ public class HomeActivity extends NavigationBaseActivity {
         startActivity(intent);
     }
     public void onBookingClick(TourEntity tour) {
-        Toast.makeText(this, "Booking: " + tour.getLocation(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, TourPurchaseActivity.class);
+        intent.putExtra(TourDetailActivity.EXTRA_TOUR_ID, tour.id);
+
+        startActivity(intent);
     }
 }

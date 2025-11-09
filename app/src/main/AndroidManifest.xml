@@ -14,11 +14,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PRM392_Final_PRJ">
         <activity
+            android:name=".activities.TourBooking.BookingStatusActivity"
+            android:label="My Tour"
+            android:parentActivityName=".activities.MoreOptionsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Tour_Payment"/>
+        <activity
+            android:name=".activities.TourBooking.TourPurchaseActivity"
+            android:exported="false"
+            android:label="Tour Schedule And Price"
+            android:parentActivityName=".activities.HomeActivity"
+            android:theme="@style/Theme.Tour_Payment" />
+        <activity
             android:name=".activities.FeedbackActivity"
             android:exported="false" />
         <activity
             android:name=".activities.AnalyticsActivity"
             android:exported="false" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="YOUR_API_KEY" />
@@ -64,7 +77,7 @@
             android:exported="true" />
         <activity
             android:name=".activities.LoginActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -73,9 +86,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
     </application>
 
 </manifest>
