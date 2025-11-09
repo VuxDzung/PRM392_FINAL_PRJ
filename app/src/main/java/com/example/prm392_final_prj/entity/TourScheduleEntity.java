@@ -23,7 +23,7 @@ public class TourScheduleEntity {
     public String place;
 
     @ColumnInfo(name = "departTime")
-    public Date departTime; // Sẽ dùng TypeConverter
+    public Date departTime;
 
     @ColumnInfo(name = "address")
     public String address;
@@ -37,17 +37,27 @@ public class TourScheduleEntity {
     @ColumnInfo(name = "tourId")
     public int tourId;
 
+    @ColumnInfo(name = "latitude")
+    public Double latitude;
+
+    @ColumnInfo(name = "longitude")
+    public Double longitude;
+
     // --- Constructors ---
     public TourScheduleEntity() {
     }
+
     @Ignore
-    public TourScheduleEntity(String place, Date departTime, String address, byte[] image, String description, int tourId) {
+    public TourScheduleEntity(String place, Date departTime, String address, byte[] image,
+                              String description, int tourId, Double latitude, Double longitude) {
         this.place = place;
         this.departTime = departTime;
         this.address = address;
         this.image = image;
         this.description = description;
         this.tourId = tourId;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     // --- Getters and Setters ---
@@ -105,5 +115,26 @@ public class TourScheduleEntity {
 
     public void setTourId(int tourId) {
         this.tourId = tourId;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    // Helper method
+    public boolean hasValidCoordinates() {
+        return latitude != null && longitude != null;
     }
 }

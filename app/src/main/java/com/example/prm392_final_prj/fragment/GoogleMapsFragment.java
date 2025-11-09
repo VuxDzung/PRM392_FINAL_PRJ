@@ -25,7 +25,6 @@ import java.util.ArrayList;
 
 public class GoogleMapsFragment extends Fragment {
 
-    // Key để truyền tham số
     private static final String ARG_MODE = "ARG_MODE";
     private static final String ARG_MARKERS = "ARG_MARKERS";
 
@@ -34,19 +33,17 @@ public class GoogleMapsFragment extends Fragment {
     private ArrayList<MapMarker> mMarkers;
 
     // Biến lưu trạng thái
-    private Marker mPickedMarker;       // Marker cho chế độ PICK_LOCATION
-    private LatLng mPickedLocation;     // Tọa độ cho chế độ PICK_LOCATION
-    private String mSelectedMarkerId;   // ID cho chế độ SELECT_EXISTING_MARKER
+    private Marker mPickedMarker;
+    private LatLng mPickedLocation;
+    private String mSelectedMarkerId;
 
-    // Interface để giao tiếp ngược lên Activity
+
     public interface MapInteractionListener {
-        // Báo cho Activity biết 1 tương tác (chọn điểm/chọn marker) đã xảy ra
+
         void onMapInteraction();
     }
 
-    /**
-     * Factory Method - Cách chuẩn để tạo Fragment với tham số.
-     */
+
     public static GoogleMapsFragment newInstance(MapMode mode, @Nullable ArrayList<MapMarker> markers) {
         GoogleMapsFragment fragment = new GoogleMapsFragment();
         Bundle args = new Bundle();
@@ -69,36 +66,34 @@ public class GoogleMapsFragment extends Fragment {
         if (mMarkers == null) mMarkers = new ArrayList<>();
     }
 
-    /**
-     * Logic chính sẽ nằm trong onMapReady, dựa trên mMode
-     */
+
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
         @Override
         public void onMapReady(GoogleMap googleMap) {
             mMap = googleMap;
             mMap.getUiSettings().setMapToolbarEnabled(false);
 
-            // 1. Thêm tất cả marker được truyền vào
+
             addInitialMarkers();
 
-            // 2. Cấu hình tương tác dựa trên chế độ
+
             switch (mMode) {
                 case VIEW:
-                    // Chế độ VIEW: Không làm gì thêm.
+
                     break;
                 case PICK_LOCATION:
-                    // Chế độ PICK: Cho phép chọn 1 điểm mới
+
                     setupPickLocationMode();
                     break;
                 case SELECT_EXISTING_MARKER:
-                    // Chế độ SELECT: Cho phép chọn 1 marker có sẵn
+
                     setupSelectMarkerMode();
                     break;
             }
         }
     };
 
-    // Hàm thêm các marker ban đầu và zoom camera
+
     private void addInitialMarkers() {
         if (mMarkers.isEmpty()) {
             LatLng hanoi = new LatLng(21.028511, 105.804817);
@@ -123,7 +118,7 @@ public class GoogleMapsFragment extends Fragment {
         }
     }
 
-    // Cài đặt cho chế độ PICK_LOCATION
+
     private void setupPickLocationMode() {
         mMap.setOnMapClickListener(latLng -> {
             mPickedLocation = latLng;
@@ -141,37 +136,35 @@ public class GoogleMapsFragment extends Fragment {
         });
     }
 
-    // Cài đặt cho chế độ SELECT_EXISTING_MARKER
+
     private void setupSelectMarkerMode() {
         mMap.setOnMarkerClickListener(marker -> {
-            mSelectedMarkerId = (String) marker.getTag(); // Lưu lại ID của marker đã chọn
+            mSelectedMarkerId = (String) marker.getTag();
             marker.showInfoWindow();
 
-            // Báo cho Activity mẹ (MapPickerActivity) để kích hoạt nút "Confirm"
             if (getActivity() instanceof MapInteractionListener) {
                 ((MapInteractionListener) getActivity()).onMapInteraction();
             }
-            return true; // true = đã xử lý, không di chuyển camera tự động
+            return true;
         });
     }
 
-    // --- Các hàm Public để Activity lấy kết quả ---
+
 
     public LatLng getPickedLocation() {
-        return mPickedLocation; // Trả về tọa độ (cho PICK_LOCATION)
+        return mPickedLocation;
     }
 
     public String getSelectedMarkerId() {
-        return mSelectedMarkerId; // Trả về ID (cho SELECT_EXISTING_MARKER)
+        return mSelectedMarkerId;
     }
 
-    // --- Các hàm vòng đời (giữ nguyên) ---
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        // Dùng layout fragment_google_maps (file XML bạn đã cung cấp)
         return inflater.inflate(R.layout.fragment_google_maps, container, false);
     }
 

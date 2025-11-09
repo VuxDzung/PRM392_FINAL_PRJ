@@ -1,6 +1,7 @@
 package com.example.prm392_final_prj.activities;
 
 import android.app.DatePickerDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.*;
 
@@ -12,22 +13,26 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.prm392_final_prj.R;
 import com.example.prm392_final_prj.dao.AppDatabase;
+import com.example.prm392_final_prj.dao.MonthlyBookingStat;
+import com.example.prm392_final_prj.dao.MonthlyRevenueStat;
 import com.example.prm392_final_prj.repository.AnalyticsRepository;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class AnalyticsActivity extends AppCompatActivity {
+public class AnalyticsActivity extends AdminNavBaseActivity {
 
     private TextView tvTotalTours, tvTotalCustomers;
     private EditText etFromDate, etToDate;
@@ -43,11 +48,12 @@ public class AnalyticsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_analytics);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        setupBottomNavigation(R.id.nav_analytics);
+//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+//            return insets;
+//        });
         initView();
     }
 
@@ -65,7 +71,13 @@ public class AnalyticsActivity extends AppCompatActivity {
         loadSummary();
         setupDatePickers();
 
-        btnFilter.setOnClickListener(v -> loadCharts());
+        btnFilter.setOnClickListener(v -> {
+            if (fromDate == null || toDate == null) {
+                Toast.makeText(this, "Please select both From and To dates", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            loadCharts();
+        });
     }
 
     private void loadSummary() {
@@ -101,8 +113,8 @@ public class AnalyticsActivity extends AppCompatActivity {
 
     private void loadCharts() {
         AppDatabase.databaseWriteExecutor.execute(() -> {
-            List<Integer> bookings = repository.getMonthlyBookingCounts(fromDate, toDate);
-            List<Double> revenues = repository.getMonthlyRevenue(fromDate, toDate);
+            List<MonthlyBookingStat> bookings = repository.getMonthlyBookingCounts(fromDate, toDate);
+            List<MonthlyRevenueStat> revenues = repository.getMonthlyRevenue(fromDate, toDate);
 
             runOnUiThread(() -> {
                 displayBarChart(bookings);
@@ -111,27 +123,69 @@ public class AnalyticsActivity extends AppCompatActivity {
         });
     }
 
-    private void displayBarChart(List<Integer> data) {
+    private void displayBarChart(List<MonthlyBookingStat> data) {
         List<BarEntry> entries = new ArrayList<>();
+        List<String> months = new ArrayList<>();
+
         for (int i = 0; i < data.size(); i++) {
-            entries.add(new BarEntry(i, data.get(i)));
+            MonthlyBookingStat stat = data.get(i);
+            entries.add(new BarEntry(i, stat.count));
+            months.add(getMonthName(stat.month));
         }
 
         BarDataSet dataSet = new BarDataSet(entries, "Bookings");
+        dataSet.setColor(Color.parseColor("#2196F3"));
+        dataSet.setValueTextColor(Color.BLACK);
+        dataSet.setValueTextSize(12f);
+
         BarData barData = new BarData(dataSet);
         barChartBookings.setData(barData);
+
+        XAxis xAxis = barChartBookings.getXAxis();
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(months));
+        xAxis.setGranularity(1f);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+
+        barChartBookings.getDescription().setEnabled(false);
+        barChartBookings.animateY(1000);
         barChartBookings.invalidate();
     }
 
-    private void displayLineChart(List<Double> data) {
+    private void displayLineChart(List<MonthlyRevenueStat> data) {
         List<Entry> entries = new ArrayList<>();
+        List<String> months = new ArrayList<>();
+
         for (int i = 0; i < data.size(); i++) {
-            entries.add(new Entry(i, data.get(i).floatValue()));
+            MonthlyRevenueStat stat = data.get(i);
+            entries.add(new Entry(i, (float) stat.revenue));
+            months.add(getMonthName(stat.month));
         }
 
         LineDataSet dataSet = new LineDataSet(entries, "Revenue");
+        dataSet.setColor(Color.parseColor("#4CAF50"));
+        dataSet.setCircleColor(Color.parseColor("#4CAF50"));
+        dataSet.setValueTextColor(Color.BLACK);
+        dataSet.setValueTextSize(12f);
+
         LineData lineData = new LineData(dataSet);
         lineChartRevenue.setData(lineData);
+
+        XAxis xAxis = lineChartRevenue.getXAxis();
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(months));
+        xAxis.setGranularity(1f);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+
+        lineChartRevenue.getDescription().setEnabled(false);
+        lineChartRevenue.animateY(1000);
         lineChartRevenue.invalidate();
+    }
+
+    private String getMonthName(int monthNumber) {
+        // monthNumber = 1–12
+        String[] months = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+        if (monthNumber >= 1 && monthNumber <= 12) {
+            return months[monthNumber - 1];
+        }
+        return "N/A";
     }
 }

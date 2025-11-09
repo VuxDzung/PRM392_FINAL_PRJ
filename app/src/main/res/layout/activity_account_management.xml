@@ -16,7 +16,8 @@
         android:textColor="@color/cyan_primary"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:paddingBottom="12dp" />
+        android:paddingBottom="12dp"
+        android:layout_gravity="center_horizontal"/>
 
     <!-- Thanh tìm kiếm -->
     <com.google.android.material.textfield.TextInputLayout
@@ -49,4 +50,14 @@
         android:layout_weight="1"
         android:scrollbars="vertical" />
 
+    <FrameLayout
+        android:id="@+id/admin_bottom_nav_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <include layout="@layout/activity_admin_nav_base" />
+    </FrameLayout>
 </LinearLayout>

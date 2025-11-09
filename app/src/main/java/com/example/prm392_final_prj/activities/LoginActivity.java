@@ -112,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
                 btnLogin.setEnabled(true);
                 String role = authRepository.getSession().getRole(); // single role saved
                 if (role != null && (role.equalsIgnoreCase("ROLE_ADMIN") || role.equalsIgnoreCase("admin"))) {
-                    startActivity(new Intent(LoginActivity.this, AdminActivity.class));
+                    startActivity(new Intent(LoginActivity.this, AnalyticsActivity.class));
                 } else {
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                 }

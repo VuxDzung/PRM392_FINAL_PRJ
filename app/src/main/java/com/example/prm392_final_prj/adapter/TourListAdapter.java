@@ -1,7 +1,6 @@
-package com.example.prm392_final_prj.adapter;// package com.example.prm392_final_prj.adapter;
+package com.example.prm392_final_prj.adapter;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,8 @@ import com.example.prm392_final_prj.activities.HomeActivity;
 
 import com.example.prm392_final_prj.R;
 import com.example.prm392_final_prj.entity.TourEntity;
+import com.example.prm392_final_prj.utils.ImageUtils;
+
 import java.util.List;
 import java.util.Locale;
 public class TourListAdapter
@@ -51,12 +52,15 @@ public class TourListAdapter
                 tour.getDeparture(), tour.getDestination(), routeType);
         holder.tourRoute.setText(route);
 
-        if (tour.getImage() != null) {
-            holder.tourImage.setImageBitmap(BitmapFactory.decodeByteArray(
-                    tour.getImage(), 0, tour.getImage().length));
-        } else {
-            holder.tourImage.setImageResource(R.drawable.ic_launcher_background);
-        }
+
+        String imagePath = tour.getImagePath();
+
+
+        ImageUtils.loadImageIntoView(
+                imagePath,
+                holder.tourImage,
+                R.drawable.ic_launcher_background
+        );
 
         holder.btnBooking.setOnClickListener(v -> {
             ((HomeActivity) context).onBookingClick(tour);
