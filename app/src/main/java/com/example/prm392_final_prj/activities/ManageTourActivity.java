@@ -3,7 +3,7 @@ package com.example.prm392_final_prj.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout; // CHANGED: Import LinearLayout
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,9 +15,8 @@ import com.example.prm392_final_prj.repository.TourRepository;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
-// CHANGED: Removed unused import android.widget.TextView
 
-public class ManageTourActivity extends NavigationBaseActivity implements AdminTourListAdapter.OnAdminTourItemClickListener {
+public class ManageTourActivity extends AdminNavBaseActivity implements AdminTourListAdapter.OnAdminTourItemClickListener {
 
     private RecyclerView recyclerView;
     private AdminTourListAdapter adapter;
@@ -33,7 +32,7 @@ public class ManageTourActivity extends NavigationBaseActivity implements AdminT
 
         setupViews();
         setupRecyclerView();
-        setupBottomNavigation(R.id.nav_home);
+        setupBottomNavigation(R.id.nav_tours);
 
         FloatingActionButton fabAddTour = findViewById(R.id.fabAddTour);
         fabAddTour.setOnClickListener(v -> {

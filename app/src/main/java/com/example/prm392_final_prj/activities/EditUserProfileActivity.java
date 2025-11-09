@@ -30,7 +30,7 @@ import com.example.prm392_final_prj.utils.*;
 public class EditUserProfileActivity extends NavigationBaseActivity {
     private EditText etFirstName, etLastName, etPhone;
     private TextView tvEmail;
-    private Button btnSave, btnChangePassword;
+    private Button btnSave;
     private ImageButton btnBack, btnChangeImage;
     private UserRepository userRepository;
     private SessionManager sessionManager;
@@ -82,7 +82,6 @@ public class EditUserProfileActivity extends NavigationBaseActivity {
         etPhone = findViewById(R.id.etPhone);
         tvEmail = findViewById(R.id.tvEmail);
         btnSave = findViewById(R.id.btnSave);
-        btnChangePassword = findViewById(R.id.btnChangePassword);
         btnBack = findViewById(R.id.btnBack);
         btnChangeImage = findViewById(R.id.btnChangeImage);
     }
@@ -119,11 +118,6 @@ public class EditUserProfileActivity extends NavigationBaseActivity {
         btnBack.setOnClickListener(v -> finish());
 
         btnSave.setOnClickListener(v -> saveUserProfile());
-
-        btnChangePassword.setOnClickListener(v -> {
-            // TODO: Implement change password dialog or navigate to change password activity
-            Toast.makeText(this, "Change password feature coming soon", Toast.LENGTH_SHORT).show();
-        });
 
         btnChangeImage.setOnClickListener(v -> openImagePicker());
     }
