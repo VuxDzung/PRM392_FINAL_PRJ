@@ -99,7 +99,7 @@ public class ScheduleEditAdapter extends RecyclerView.Adapter<ScheduleEditAdapte
     public void onViewDetachedFromWindow(@NonNull ScheduleEditViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
 
-        int pos = holder.getBindingAdapterPosition();
+        int pos = holder.getAdapterPosition();
         if (pos != RecyclerView.NO_POSITION && pos < mSchedules.size()) {
             TourScheduleEntity s = mSchedules.get(pos);
             s.setPlace(holder.etPlace.getText().toString().trim());

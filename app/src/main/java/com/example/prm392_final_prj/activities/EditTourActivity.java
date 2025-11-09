@@ -146,7 +146,6 @@ public class EditTourActivity extends NavigationBaseActivity implements Schedule
         tourRepository.getTourById(mTourId).observe(this, tour -> {
             if (tour != null) {
                 mCurrentTour = tour;
-                // Lấy đường dẫn ảnh hiện tại từ DB
                 mCurrentPhotoPath = tour.getImagePath();
                 populateUi(tour);
             }
