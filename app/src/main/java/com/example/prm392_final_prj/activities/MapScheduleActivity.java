@@ -1,10 +1,16 @@
 package com.example.prm392_final_prj.activities;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+
 import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -29,10 +35,11 @@ import java.util.List;
 
 public class MapScheduleActivity extends AppCompatActivity {
     public static final String EXTRA_TOUR_ID = "tour_id";
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
     private TourRepository tourRepository;
     private int tourId = -1;
-    private boolean isMapLoaded = false; //flag
+    private boolean isMapLoaded = false;
 
     // Mockdata for testing
     private ScheduleMockData mockData = new ScheduleMockData();
@@ -73,8 +80,48 @@ public class MapScheduleActivity extends AppCompatActivity {
         bottomSheetBehavior.setPeekHeight(300);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
-        loadSchedulesAndSetupMap();
+        checkAndRequestLocationPermissions();
+
     }
+
+
+    private void checkAndRequestLocationPermissions() {
+        boolean fineGranted = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED;
+        boolean coarseGranted = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED;
+
+        if (fineGranted || coarseGranted) {
+            loadSchedulesAndSetupMap();
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                    },
+                    LOCATION_PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            boolean fineGranted = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED;
+            boolean coarseGranted = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED;
+
+            if (fineGranted || coarseGranted) {
+                loadSchedulesAndSetupMap();
+            } else {
+                Toast.makeText(this, "Need Location Access to display map", Toast.LENGTH_LONG).show();
+                finish();
+            }
+        }
+    }
+
 
     private void loadSchedulesAndSetupMap() {
         tourRepository.getSchedulesForTour(tourId).observe(this, schedules -> {
@@ -89,7 +136,7 @@ public class MapScheduleActivity extends AppCompatActivity {
             }
 
             if (!isMapLoaded) {
-                isMapLoaded = true; //flag
+                isMapLoaded = true;
 
                 ArrayList<MapMarker> mapMarkers = new ArrayList<>();
                 for (TourScheduleEntity schedule : schedules) {

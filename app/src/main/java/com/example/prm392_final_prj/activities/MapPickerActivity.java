@@ -47,7 +47,7 @@ public class MapPickerActivity extends AppCompatActivity implements GoogleMapsFr
         mode = (MapMode) getIntent().getSerializableExtra(EXTRA_MODE);
         if (mode == null) mode = MapMode.PICK_LOCATION;
 
-        markers = getIntent().getParcelableArrayListExtra(EXTRA_MARKERS); // Gán vào biến thành viên
+        markers = getIntent().getParcelableArrayListExtra(EXTRA_MARKERS);
 
         double currentLat = getIntent().getDoubleExtra(EXTRA_CURRENT_LAT, 0);
         double currentLng = getIntent().getDoubleExtra(EXTRA_CURRENT_LNG, 0);
@@ -70,7 +70,6 @@ public class MapPickerActivity extends AppCompatActivity implements GoogleMapsFr
         if (fineGranted || coarseGranted) {
             setupMapFragment(markers);
         } else {
-            // Quyền chưa được cấp
             ActivityCompat.requestPermissions(this,
                     new String[]{
                             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -86,8 +85,13 @@ public class MapPickerActivity extends AppCompatActivity implements GoogleMapsFr
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Người dùng đã đồng ý cấp quyền -> setup bản đồ
+
+            boolean fineGranted = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED;
+            boolean coarseGranted = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED;
+
+            if (fineGranted || coarseGranted) {
                 setupMapFragment(markers);
             } else {
                 Toast.makeText(this, "Need Location Access to continue", Toast.LENGTH_LONG).show();
@@ -106,7 +110,6 @@ public class MapPickerActivity extends AppCompatActivity implements GoogleMapsFr
     }
 
     private void setupConfirmButton() {
-        // ... (Giữ nguyên code của bạn) ...
         btnConfirm.setOnClickListener(v -> {
             Intent resultIntent = new Intent();
 

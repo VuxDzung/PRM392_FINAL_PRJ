@@ -27,7 +27,7 @@ public class TourRepository {
         mTourScheduleDao = db.tourScheduleDao();
     }
 
-    // --- Tour ---
+
     public void insertTour(TourEntity tour, OnTourInsertedListener listener) {
         AppDatabase.databaseWriteExecutor.execute(() -> {
             long newId = mTourDao.insert(tour);
@@ -35,34 +35,73 @@ public class TourRepository {
         });
     }
 
+
     public void updateTour(TourEntity tour) {
         AppDatabase.databaseWriteExecutor.execute(() -> mTourDao.update(tour));
     }
 
+
     public void deleteTour(TourEntity tour) {
-        AppDatabase.databaseWriteExecutor.execute(() -> mTourDao.delete(tour));
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            mTourDao.softDelete(tour.getId());
+        });
     }
+
+
+    public void restoreTour(TourEntity tour) {
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            mTourDao.restore(tour.getId());
+        });
+    }
+
 
     public LiveData<List<TourEntity>> getAllTours() {
         return mTourDao.getAllTours();
     }
 
+
     public LiveData<TourEntity> getTourById(int id) {
         return mTourDao.getTourById(id);
     }
+    
 
     public LiveData<List<TourScheduleEntity>> getSchedulesForTour(int tourId) {
         return mTourScheduleDao.getSchedulesForTour(tourId);
     }
+
+
     public void insertTourSchedule(TourScheduleEntity schedule) {
         AppDatabase.databaseWriteExecutor.execute(() -> {
             mTourScheduleDao.insert(schedule);
         });
     }
 
+
+    public void updateTourSchedule(TourScheduleEntity schedule) {
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            mTourScheduleDao.update(schedule);
+        });
+    }
+
+
+    public void deleteTourSchedule(TourScheduleEntity schedule) {
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            mTourScheduleDao.softDelete(schedule.getId());
+        });
+    }
+
+
+    public void restoreTourSchedule(TourScheduleEntity schedule) {
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            mTourScheduleDao.restore(schedule.getId());
+        });
+    }
+
+
     public void syncSchedulesForTour(int tourId, List<TourScheduleEntity> newList) {
         AppDatabase.databaseWriteExecutor.execute(() -> {
             List<TourScheduleEntity> oldList = mTourScheduleDao.getSchedulesNow(tourId);
+
 
             for (TourScheduleEntity old : oldList) {
                 boolean stillExists = false;
@@ -73,9 +112,10 @@ public class TourRepository {
                     }
                 }
                 if (!stillExists) {
-                    mTourScheduleDao.delete(old);
+                    mTourScheduleDao.softDelete(old.getId());
                 }
             }
+
 
             for (TourScheduleEntity newItem : newList) {
                 newItem.setTourId(tourId);

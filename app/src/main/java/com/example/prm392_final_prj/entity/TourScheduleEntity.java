@@ -8,14 +8,18 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import java.util.Date;
 
-@Entity(tableName = "tour_schedule",
-        foreignKeys = @ForeignKey(entity = TourEntity.class,
+@Entity(
+        tableName = "tour_schedule",
+        foreignKeys = @ForeignKey(
+                entity = TourEntity.class,
                 parentColumns = "id",
                 childColumns = "tourId",
-                onDelete = ForeignKey.CASCADE),
+                onDelete = ForeignKey.CASCADE
+        ),
         indices = {@Index(value = {"tourId"})}
 )
 public class TourScheduleEntity {
+
     @PrimaryKey(autoGenerate = true)
     public int id;
 
@@ -43,9 +47,10 @@ public class TourScheduleEntity {
     @ColumnInfo(name = "longitude")
     public Double longitude;
 
-    // --- Constructors ---
-    public TourScheduleEntity() {
-    }
+    @ColumnInfo(name = "isDeleted")
+    public boolean isDeleted = false;
+
+    public TourScheduleEntity() {}
 
     @Ignore
     public TourScheduleEntity(String place, Date departTime, String address, byte[] image,
@@ -58,82 +63,39 @@ public class TourScheduleEntity {
         this.tourId = tourId;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.isDeleted = false;
     }
 
-    // --- Getters and Setters ---
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public String getPlace() { return place; }
+    public void setPlace(String place) { this.place = place; }
 
-    public String getPlace() {
-        return place;
-    }
+    public Date getDepartTime() { return departTime; }
+    public void setDepartTime(Date departTime) { this.departTime = departTime; }
 
-    public void setPlace(String place) {
-        this.place = place;
-    }
+    public String getAddress() { return address; }
+    public void setAddress(String address) { this.address = address; }
 
-    public Date getDepartTime() {
-        return departTime;
-    }
+    public byte[] getImage() { return image; }
+    public void setImage(byte[] image) { this.image = image; }
 
-    public void setDepartTime(Date departTime) {
-        this.departTime = departTime;
-    }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 
-    public String getAddress() {
-        return address;
-    }
+    public int getTourId() { return tourId; }
+    public void setTourId(int tourId) { this.tourId = tourId; }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+    public Double getLatitude() { return latitude; }
+    public void setLatitude(Double latitude) { this.latitude = latitude; }
 
-    public byte[] getImage() {
-        return image;
-    }
+    public Double getLongitude() { return longitude; }
+    public void setLongitude(Double longitude) { this.longitude = longitude; }
 
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
+    public boolean isDeleted() { return isDeleted; }
+    public void setDeleted(boolean deleted) { isDeleted = deleted; }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getTourId() {
-        return tourId;
-    }
-
-    public void setTourId(int tourId) {
-        this.tourId = tourId;
-    }
-
-    public Double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
-
-    // Helper method
     public boolean hasValidCoordinates() {
         return latitude != null && longitude != null;
     }
