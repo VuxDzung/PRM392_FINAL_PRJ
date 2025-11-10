@@ -106,18 +106,6 @@ public class TourDetailActivity extends NavigationBaseActivity {
 
         detailSeatsAvailable.setText(String.format(Locale.US, "%d seats", tour.maxCapacity));
 
-        // SỬA: Thay thế logic đọc BLOB (byte[]) bằng logic đọc File Path
-        // Code cũ:
-        // if (tour.image != null && tour.image.length > 0) {
-        //     detailImage.setImageBitmap(BitmapFactory.decodeByteArray(tour.image, 0, tour.image.length));
-        // } else {
-        //     detailImage.setImageResource(R.drawable.ic_launcher_background);
-        // }
-
-        // Code mới:
-        // Giả định TourEntity đã được sửa để có "public String imagePath;"
-        // Hàm ImageUtils.loadImageIntoView đã bao gồm cả logic đặt ảnh mặc định
-        // nếu imagePath null, rỗng, hoặc file không tồn tại.
         ImageUtils.loadImageIntoView(tour.imagePath, detailImage, R.drawable.ic_launcher_background);
     }
 
@@ -128,7 +116,9 @@ public class TourDetailActivity extends NavigationBaseActivity {
     }
 
     private void onScheduleClick(){
-        Toast.makeText(this, "Schedule: " + detailLocation.getText(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, MapScheduleActivity.class);
+        intent.putExtra(EXTRA_TOUR_ID, tourId);
+        startActivity(intent);
     }
 
     private void onBookingClick(){

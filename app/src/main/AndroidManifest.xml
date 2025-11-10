@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:adroid="http://schemas.android.com/apk/distribution">
+    xmlns:adroid="http://schemas.android.com/apk/distribution"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -15,39 +16,44 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PRM392_Final_PRJ">
         <activity
+            android:name=".activities.TourBookingAdmin.BookingListInTourActivity"
+            android:exported="false"
+            android:label="Tour Booking Booked"
+            android:parentActivityName=".activities.TourBookingAdmin.TourBookingListActivity"
+            android:theme="@style/Theme.PageWithActionBar"/>
+        <activity
+            android:name=".activities.TourBookingAdmin.TourBookingListActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.AdminNavBaseActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.TourBooking.BookingStatusActivity"
+            android:exported="false"
+            android:label="My Tour"
+            android:theme="@style/Theme.PageWithActionBar"
+            android:parentActivityName=".activities.MoreOptionsActivity"
+             />
+        <activity
+            android:name=".activities.TourBooking.TourPurchaseActivity"
+            android:exported="false"
+            android:label="Tour Schedule And Price"
+            android:parentActivityName=".activities.HomeActivity"
+            android:theme="@style/Theme.PageWithActionBar" />
+        <activity
             android:name=".activities.FeedbackActivity"
+            android:theme="@style/Theme.PageWithActionBar"
+            android:label="Feedback"
+            android:parentActivityName=".activities.TourDetailActivity"
             android:exported="false" />
+
         <activity
             android:name=".activities.AnalyticsActivity"
             android:exported="false" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="YOUR_API_KEY" />
-        <activity
-            android:name=".activities.NotificationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.MapScheduleActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.AccountManagementActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.EditUserProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.UserProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.TourDetailActivity"
-            android:exported="false" />
-
-        <activity android:name=".activities.MapPickerActivity"
-            android:exported="false" />
-
+            android:value="AIzaSyAoeVHEu7GsvvoDKfg6uUx5JFAhuYQYhWc" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -59,17 +65,49 @@
              project's local.properties file (e.g. MAPS_API_KEY=Aiza...), and replace the
              "YOUR_API_KEY" string in this file with "${MAPS_API_KEY}".
         -->
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="YOUR_API_KEY" />
 
         <activity
+            android:name=".activities.NotificationActivity"
+            android:label="Notification"
+            android:exported="false" />
+        <activity
+            android:name=".activities.MapScheduleActivity"
+            android:theme="@style/Theme.PageWithActionBar"
+            android:label="Map Schedule"
+            android:parentActivityName=".activities.TourDetailActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.AccountManagementActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.EditUserProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.UserProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.TourDetailActivity"
+            android:theme="@style/Theme.PageWithActionBar"
+            android:label="Tour Detail"
+            android:parentActivityName=".activities.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.MapPickerActivity"
+            android:theme="@style/Theme.PageWithActionBar"
+            android:label="Map Picker"
+            android:exported="false" />
+        <activity
             android:name=".activities.EditTourActivity"
+            android:theme="@style/Theme.PageWithActionBar"
+            android:parentActivityName=".activities.ManageTourActivity"
+            android:label="Edit Tour"
             android:exported="false" />
         <activity
             android:name=".activities.AddTourActivity"
             android:exported="false"
-            android:theme="@style/Theme.PRM392_Final_PRJ" />
+            android:parentActivityName=".activities.ManageTourActivity"
+            android:label="Add Tour"
+            android:theme="@style/Theme.PageWithActionBar"/>
         <activity
             android:name=".activities.HomeActivity"
             android:exported="true" />
@@ -78,15 +116,24 @@
             android:exported="false" />
         <activity
             android:name=".activities.AboutUsActivity"
+            android:theme="@style/Theme.PageWithActionBar"
+            android:parentActivityName=".activities.MoreOptionsActivity"
+            android:label="About Us"
             android:exported="false" />
         <activity
             android:name=".activities.InformationActivity"
+            android:theme="@style/Theme.PageWithActionBar"
+            android:parentActivityName=".activities.MoreOptionsActivity"
+            android:label="Information"
             android:exported="false" />
         <activity
             android:name=".activities.ResetPasswordActivity"
             android:exported="true" />
         <activity
             android:name=".activities.ChangePasswordActivity"
+            android:theme="@style/Theme.PageWithActionBar"
+            android:parentActivityName=".activities.MoreOptionsActivity"
+            android:label="Change Password"
             android:exported="true" />
         <activity
             android:name=".activities.RegisterActivity"
@@ -96,20 +143,20 @@
             android:exported="true" />
         <activity
             android:name=".activities.ManageTourActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:label="Manage Tours" />
         <activity
             android:name=".activities.LoginActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".MainActivity"
-            android:exported="true"/>
+            android:exported="true" />
     </application>
 
 </manifest>

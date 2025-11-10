@@ -149,6 +149,13 @@ public class GoogleMapsFragment extends Fragment {
         });
     }
 
+    public void moveCameraTo(double latitude, double longitude, float zoomLevel) {
+        if (mMap != null) {
+            LatLng newLocation = new LatLng(latitude, longitude);
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(newLocation, zoomLevel));
+        }
+    }
+
 
 
     public LatLng getPickedLocation() {

@@ -75,3 +75,7 @@ captures/
 /*.gradle
 /.gradletasknamecache
 /gradle/
+app/src/main/java/com/example/prm392_final_prj/activities/TourDetailActivity.java
+app/src/main/java/com/example/prm392_final_prj/repository/AnalyticsRepository.java
+app/src/main/java/com/example/prm392_final_prj/entity/ReviewEntity.java
+app/src/main/java/com/example/prm392_final_prj/dao/BookingOrderDao.java

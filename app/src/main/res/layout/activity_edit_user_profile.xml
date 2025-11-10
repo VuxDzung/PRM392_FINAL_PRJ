@@ -168,18 +168,6 @@
                 android:backgroundTint="#2196F3"
                 android:layout_marginTop="32dp"/>
 
-            <!-- Change Password Button -->
-            <Button
-                android:id="@+id/btnChangePassword"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="Change Password"
-                android:textColor="#2196F3"
-                android:textSize="16sp"
-                android:backgroundTint="#FFFFFF"
-                style="?attr/materialButtonOutlinedStyle"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="24dp"/>
 
         </LinearLayout>
 
