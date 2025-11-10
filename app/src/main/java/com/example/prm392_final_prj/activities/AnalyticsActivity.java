@@ -125,12 +125,12 @@ public class AnalyticsActivity extends AdminNavBaseActivity {
 
     private void displayBarChart(List<MonthlyBookingStat> data) {
         List<BarEntry> entries = new ArrayList<>();
-        List<String> months = new ArrayList<>();
+        List<String> labels = new ArrayList<>();
 
         for (int i = 0; i < data.size(); i++) {
             MonthlyBookingStat stat = data.get(i);
             entries.add(new BarEntry(i, stat.count));
-            months.add(getMonthName(stat.month));
+            labels.add(getMonthName(stat.month) + "-" + stat.year);
         }
 
         BarDataSet dataSet = new BarDataSet(entries, "Bookings");
@@ -142,7 +142,7 @@ public class AnalyticsActivity extends AdminNavBaseActivity {
         barChartBookings.setData(barData);
 
         XAxis xAxis = barChartBookings.getXAxis();
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(months));
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
         xAxis.setGranularity(1f);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
@@ -153,12 +153,12 @@ public class AnalyticsActivity extends AdminNavBaseActivity {
 
     private void displayLineChart(List<MonthlyRevenueStat> data) {
         List<Entry> entries = new ArrayList<>();
-        List<String> months = new ArrayList<>();
+        List<String> labels = new ArrayList<>();
 
         for (int i = 0; i < data.size(); i++) {
             MonthlyRevenueStat stat = data.get(i);
             entries.add(new Entry(i, (float) stat.revenue));
-            months.add(getMonthName(stat.month));
+            labels.add(getMonthName(stat.month) + "-" + stat.year);
         }
 
         LineDataSet dataSet = new LineDataSet(entries, "Revenue");
@@ -171,7 +171,7 @@ public class AnalyticsActivity extends AdminNavBaseActivity {
         lineChartRevenue.setData(lineData);
 
         XAxis xAxis = lineChartRevenue.getXAxis();
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(months));
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
         xAxis.setGranularity(1f);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 

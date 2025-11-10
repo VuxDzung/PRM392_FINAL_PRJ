@@ -34,15 +34,27 @@ public interface BookingOrderDao {
     @Query("SELECT COUNT(*) FROM booking_order")
     int getTotalBookingsSync();
 
-    @Query("SELECT CAST(strftime('%m', datetime(startTime / 1000, 'unixepoch')) AS INTEGER) AS month, " +
+    @Query("SELECT " +
+            "CAST(strftime('%m', datetime(startTime / 1000, 'unixepoch')) AS INTEGER) AS month, " +
+            "CAST(strftime('%Y', datetime(startTime / 1000, 'unixepoch')) AS INTEGER) AS year, " +
             "COUNT(*) AS count " +
-            "FROM booking_order WHERE startTime BETWEEN :from AND :to GROUP BY month")
+            "FROM booking_order " +
+            "WHERE startTime BETWEEN :from AND :to " +
+            "AND status = 2 " +
+            "GROUP BY year, month " +
+            "ORDER BY year, month")
     List<MonthlyBookingStat> getBookingCountByMonth(Date from, Date to);
 
-    @Query("SELECT CAST(strftime('%m', datetime(bo.startTime / 1000, 'unixepoch')) AS INTEGER) AS month, " +
-            "SUM(bo.adultAmount * t.price) AS revenue " +
-            "FROM booking_order bo JOIN tour t ON bo.tourId = t.id " +
-            "WHERE bo.startTime BETWEEN :from AND :to GROUP BY month")
+    @Query("SELECT " +
+            "CAST(strftime('%m', datetime(bo.startTime / 1000, 'unixepoch')) AS INTEGER) AS month, " +
+            "CAST(strftime('%Y', datetime(bo.startTime / 1000, 'unixepoch')) AS INTEGER) AS year, " +
+            "SUM((bo.adultAmount * t.price) + (bo.childAmount * t.price / 2.0)) AS revenue " +
+            "FROM booking_order bo " +
+            "JOIN tour t ON bo.tourId = t.id " +
+            "WHERE bo.startTime BETWEEN :from AND :to " +
+            "AND bo.status = 2 " +
+            "GROUP BY year, month " +
+            "ORDER BY year, month")
     List<MonthlyRevenueStat> getRevenueByMonth(Date from, Date to);
 
 }
