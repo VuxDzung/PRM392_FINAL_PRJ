@@ -2,7 +2,7 @@ package com.example.prm392_final_prj.activities;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -19,13 +20,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prm392_final_prj.R;
-
 import com.example.prm392_final_prj.adapter.TourScheduleAdapter;
 import com.example.prm392_final_prj.dto.request.MapMarker;
 import com.example.prm392_final_prj.entity.TourScheduleEntity;
 import com.example.prm392_final_prj.fragment.GoogleMapsFragment;
 import com.example.prm392_final_prj.mockdata.ScheduleMockData;
-import com.example.prm392_final_prj.mockdata.TourMockData;
 import com.example.prm392_final_prj.repository.TourRepository;
 import com.example.prm392_final_prj.utils.MapMode;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -59,6 +58,11 @@ public class MapScheduleActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         tourRepository = new TourRepository(getApplication());
 
         tourId = getIntent().getIntExtra(EXTRA_TOUR_ID, -1);
@@ -82,6 +86,21 @@ public class MapScheduleActivity extends AppCompatActivity {
 
         checkAndRequestLocationPermissions();
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        Intent intent = NavUtils.getParentActivityIntent(this);
+
+        if (intent != null) {
+            intent.putExtra(TourDetailActivity.EXTRA_TOUR_ID, tourId);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            NavUtils.navigateUpTo(this, intent);
+        } else {
+            finish();
+        }
+
+        return true;
     }
 
 

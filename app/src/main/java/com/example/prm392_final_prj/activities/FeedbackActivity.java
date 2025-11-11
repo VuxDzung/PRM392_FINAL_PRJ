@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -93,6 +94,22 @@ public class FeedbackActivity extends AppCompatActivity {
         loadReviews();
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        Intent intent = NavUtils.getParentActivityIntent(this);
+
+        if (intent != null) {
+            intent.putExtra(TourDetailActivity.EXTRA_TOUR_ID, currentTourId);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            NavUtils.navigateUpTo(this, intent);
+        } else {
+            finish();
+        }
+
+        return true;
+    }
+
+
     public int getCurrentUserId() {
         return currentUserId;
     }
@@ -122,7 +139,6 @@ public class FeedbackActivity extends AppCompatActivity {
                 if (reviews != null) {
                     reviewList = reviews;
 
-                    // Check if the user has already submitted a review for this tour
                     userExistingReview = reviews.stream()
                             .filter(review -> review.userId == currentUserId)
                             .findFirst()

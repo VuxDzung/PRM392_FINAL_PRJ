@@ -2,6 +2,7 @@ package com.example.prm392_final_prj.activities;
 
 import android.content.Intent;
 // SỬA: Import ImageUtils
+import com.example.prm392_final_prj.activities.TourBooking.TourPurchaseActivity;
 import com.example.prm392_final_prj.utils.ImageUtils;
 import android.os.Bundle;
 import android.widget.Button;
@@ -122,6 +123,8 @@ public class TourDetailActivity extends NavigationBaseActivity {
     }
 
     private void onBookingClick(){
-        Toast.makeText(this, "Booking: " + detailLocation.getText(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, TourPurchaseActivity.class);
+        intent.putExtra(EXTRA_TOUR_ID, tourId);
+        startActivity(intent);
     }
 }

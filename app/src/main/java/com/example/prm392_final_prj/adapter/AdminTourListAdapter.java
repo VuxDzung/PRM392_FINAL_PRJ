@@ -22,7 +22,7 @@ public class AdminTourListAdapter extends RecyclerView.Adapter<AdminTourListAdap
 
     private List<TourEntity> mTours = new ArrayList<>();
     private final OnAdminTourItemClickListener mListener;
-    private final NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+    private final NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("en", "US"));
 
     public interface OnAdminTourItemClickListener {
         void onEditClick(TourEntity tour);

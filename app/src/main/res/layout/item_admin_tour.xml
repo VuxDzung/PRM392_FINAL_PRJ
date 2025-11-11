@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- SỬA: Thêm ImageView để hiển thị ảnh -->
         <ImageView
             android:id="@+id/ivTourItemImage"
             android:layout_width="match_parent"
@@ -40,7 +39,7 @@
                 android:id="@+id/tvTourPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1,200,000 VND"
+                android:text="1,200,000 $"
                 android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
                 android:textColor="?attr/colorPrimary"
                 android:layout_marginTop="4dp"/>
