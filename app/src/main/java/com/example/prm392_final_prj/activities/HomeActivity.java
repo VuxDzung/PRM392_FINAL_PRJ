@@ -1,5 +1,12 @@
 package com.example.prm392_final_prj.activities;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.annotation.NonNull;
+
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -53,7 +60,6 @@ public class HomeActivity extends NavigationBaseActivity {
     private FrameLayout searchIconContainer;
     private FrameLayout micIconContainer;
 
-    //filter current data
     private String currentPriceFilter = "Mức giá";
     private String currentDurationFilter = "Loại hình";
     private String currentDepartureFilter = "Địa điểm đi";
@@ -61,7 +67,9 @@ public class HomeActivity extends NavigationBaseActivity {
     private String currentAirwayFilter = "Loại chuyến bay";
     private String currentSeatsFilter = "Số lượng khách";
 
-    // Voice search result launcher
+    private static final int RECORD_AUDIO_PERMISSION_REQUEST_CODE = 201;
+
+
     private final ActivityResultLauncher<Intent> voiceSearchResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -83,10 +91,9 @@ public class HomeActivity extends NavigationBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        //set up for bottom nav
         setupBottomNavigation(R.id.nav_home);
 
-        RecyclerView recyclerView = findViewById(R.id.tour_recycler_view); // ID từ activity_home.xml
+        RecyclerView recyclerView = findViewById(R.id.tour_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         adapter = new TourListAdapter(tourList, this);
@@ -107,9 +114,11 @@ public class HomeActivity extends NavigationBaseActivity {
         searchIconContainer.setOnClickListener(v -> {
             applyFilters();
         });
+
         micIconContainer = findViewById(R.id.mic_icon_container);
+
         micIconContainer.setOnClickListener(v -> {
-            startVoiceSearch();
+            checkAndRequestAudioPermission();
         });
 
         setupSpinnerListeners();
@@ -130,6 +139,33 @@ public class HomeActivity extends NavigationBaseActivity {
             applyFilters();
         });
     }
+
+    private void checkAndRequestAudioPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+                == PackageManager.PERMISSION_GRANTED) {
+            startVoiceSearch();
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.RECORD_AUDIO},
+                    RECORD_AUDIO_PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == RECORD_AUDIO_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startVoiceSearch();
+            } else {
+                Toast.makeText(this, "Cần cấp quyền ghi âm để sử dụng tính năng này.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 
     private void updateDynamicSpinners(List<TourEntity> tours) {
         // 1. Departure
